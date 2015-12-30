@@ -1,16 +1,16 @@
 'use strict';
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var exphbs  = require('express-handlebars');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const exphbs  = require('express-handlebars');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var routesController = require('./app/routes/routesController');
-var users = require('./app/routes/users');
+const routesController = require('./app/routes/routesController');
+const users = require('./app/routes/users');
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
@@ -31,12 +31,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'app/public')));
-
+    // Disable template caching in browser for dev.
+if (app.get('env') !== 'production') {
+    app.use((req, res, next) => {
+        if (req.accepts('html')) {
+            res.setHeader('Pragma', 'no-cache');
+            res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+            res.setHeader('Expires', '0');
+        }
+        return next();
+    });
+}
 app.use('/', routesController);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -47,7 +57,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') !== 'production') {
-    app.use(function(err, req, res, next) {
+    app.use((err, req, res, next) => {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -58,7 +68,7 @@ if (app.get('env') !== 'production') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,

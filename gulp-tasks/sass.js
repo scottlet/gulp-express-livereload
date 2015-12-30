@@ -1,17 +1,17 @@
 'use strict';
-var autoprefixer = require('autoprefixer');
-var cssMqpacker = require('css-mqpacker');
-var csswring = require('csswring');
-var gulp = require('gulp');
-var gulpIf = require('gulp-if');
-var gulpLivereload = require('gulp-livereload');
-var gulpNotify = require('gulp-notify');
-var gulpPlumber = require('gulp-plumber');
-var gulpPostcss = require('gulp-postcss');
-var gulpSass = require('gulp-sass');
-var gulpSourcemaps = require('gulp-sourcemaps');
-var postcssAssets  = require('postcss-assets');
-var bourbon = require('node-bourbon').includePaths;
+const autoprefixer = require('autoprefixer');
+const cssMqpacker = require('css-mqpacker');
+const csswring = require('csswring');
+const gulp = require('gulp');
+const gulpIf = require('gulp-if');
+const gulpLivereload = require('gulp-livereload');
+const gulpNotify = require('gulp-notify');
+const gulpPlumber = require('gulp-plumber');
+const gulpPostcss = require('gulp-postcss');
+const gulpSass = require('gulp-sass');
+const gulpSourcemaps = require('gulp-sourcemaps');
+const postcssAssets  = require('postcss-assets');
+const bourbon = require('node-bourbon').includePaths;
 const CONSTS = require('./CONSTS');
 
 const isDev = CONSTS.NODE_ENV !== 'production';
@@ -22,7 +22,7 @@ const sassOptions = {
 };
 
 function styles() {
-    var processors = [
+    const processors = [
         autoprefixer({browsers: CONSTS.BROWSER_CONFIG}),
         cssMqpacker,
         csswring,

@@ -4,11 +4,11 @@ var sinon = require('sinon');
 var chai = require('chai');
 var expect = chai.expect;
 
-var users = require('../../js/server/routes/users');
+var users = require('../../../app/routes/users');
 
-describe('Routes', function() {
-    describe('GET Index', function() {
-        it('should respond', function() {
+describe('Routes', () => {
+    describe('GET Index', () => {
+        it('should respond', () => {
             var req,res,spy;
 
             req = res = {};

@@ -1,11 +1,11 @@
 'use strict';
-var gulp = require('gulp');
+const gulp = require('gulp');
 
-gulp.task('default', function() {
+gulp.task('default', () => {
     gulp.start('build');
 });
 
-gulp.task('local', function() {
+gulp.task('local', () => {
     gulp.start('clean', 'eslint');
 });
 

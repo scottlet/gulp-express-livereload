@@ -1,5 +1,5 @@
 'use strict';
-var gulp = require('gulp');
+const gulp = require('gulp');
 const CONSTS = require('./CONSTS');
 
 function copyDeploy () {

@@ -1,8 +1,8 @@
 'use strict';
-var gulp = require('gulp');
-var del = require('del');
+const gulp = require('gulp');
+const del = require('del');
 const CONSTS = require('./CONSTS');
 
 gulp.task('clean',  () => {
-    return del.sync([CONSTS.STATIC_PATH, CONSTS.VIEWS, CONSTS.ROUTES, CONSTS.DEPLOY_DEST]);
+    return del.sync([CONSTS.APPSERVER_DEST, CONSTS.DEPLOY_DEST]);
 });

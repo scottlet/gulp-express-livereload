@@ -1,12 +1,12 @@
 'use strict';
 /*eslint-disable no-console*/
-var gulp = require('gulp');
-var gulpConnect = require('gulp-connect');
-var gulpNodemon = require('gulp-nodemon');
-var proxyMiddleware = require('proxy-middleware');
-var connectLivereload = require('connect-livereload');
-var gulpLivereload = require('gulp-livereload');
-var url = require('url');
+const gulp = require('gulp');
+const gulpConnect = require('gulp-connect');
+const gulpNodemon = require('gulp-nodemon');
+const proxyMiddleware = require('proxy-middleware');
+const connectLivereload = require('connect-livereload');
+const gulpLivereload = require('gulp-livereload');
+const url = require('url');
 const CONSTS = require('./CONSTS');
 
 function runNodeMon () {
@@ -16,20 +16,23 @@ function runNodeMon () {
         ignore: [
             CONSTS.NODEMON_IGNORE
         ]
-    }).on('restart', function() {
-        setTimeout(function (changed) {
-            gulpLivereload.reload(changed);
+    }).on('start', () => {
+        setTimeout((changed) => {
+            return gulp.src('app.js')
+                .pipe(gulpLivereload({
+                    port: CONSTS.LIVERELOAD_PORT
+                }));
         }, 750);
     });
 }
 
 function makeServer() {
-    var port = CONSTS.GULP_PORT;
-    var proxyOptions = url.parse(CONSTS.APP_SERVER);
+    const port = CONSTS.GULP_PORT;
+    let proxyOptions = url.parse(CONSTS.APP_SERVER);
     proxyOptions.route = '/';
     gulpConnect.server({
         port,
-        middleware: function (server) {
+        middleware: (server) => {
             return [
                 connectLivereload({
                     port: CONSTS.LIVERELOAD_PORT
@@ -41,5 +44,5 @@ function makeServer() {
     console.log('server http://127.0.0.1:' + port);
 }
 gulp.task('nodemon', ['copy'], runNodeMon);
-gulp.task('makeserver', ['copy', 'browserify', 'sass'], makeServer);
+gulp.task('makeserver', ['copy', 'browserify', 'sass', 'watch'], makeServer);
 gulp.task('server', ['build', 'watch', 'nodemon', 'makeserver']);

@@ -1,11 +1,12 @@
 'use strict';
-var gulp = require('gulp');
-var gulpChanged = require('gulp-changed');
-var gulpIf = require('gulp-if');
-var gulpLivereload = require('gulp-livereload');
+const gulp = require('gulp');
+const gulpChanged = require('gulp-changed');
+const gulpIf = require('gulp-if');
+const gulpLivereload = require('gulp-livereload');
 const CONSTS = require('./CONSTS');
 const STATIC_SRC = [CONSTS.IMG_SRC + '/**', CONSTS.FONT_SRC + '/**'];
-const APPSERVER_SRC = [CONSTS.SERVER_JS_SRC + '/**/*.js'];
+const APPSERVER_SRC = [CONSTS.JS_SERVER_SRC + '/**/*.js'];
+const SHARED_SRC = [CONSTS.JS_SHARED_SRC + '/**/*.js'];
 const TEMPLATES_SRC = [CONSTS.TEMPLATES_SRC + '/**'];
 
 function copyViews () {
@@ -13,7 +14,10 @@ function copyViews () {
 }
 
 function copyFiles () {
-    return copyFilesFn(APPSERVER_SRC, CONSTS.APPSERVER_DEST, CONSTS.SERVER_JS_SRC, false);
+    return copyFilesFn(APPSERVER_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SERVER_SRC, false);
+}
+function copySharedFiles () {
+    return copyFilesFn(SHARED_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SRC, false);
 }
 function copyStaticFiles () {
     return copyFilesFn(STATIC_SRC, CONSTS.STATIC_PATH, CONSTS.SRC, true);
@@ -28,6 +32,7 @@ function copyFilesFn (src, dest, base, reload) {
 }
 
 gulp.task('copyfiles', copyFiles);
+gulp.task('copysharedfiles', copySharedFiles);
 gulp.task('copystaticfiles', copyStaticFiles);
 gulp.task('copyviews', copyViews);
-gulp.task('copy', ['clean', 'copyfiles', 'copystaticfiles', 'copyviews']);
+gulp.task('copy', ['clean', 'copyfiles', 'copysharedfiles', 'copystaticfiles', 'copyviews']);
