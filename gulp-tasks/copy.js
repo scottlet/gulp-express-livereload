@@ -1,10 +1,11 @@
 'use strict';
-const APPSERVER_SRC = [CONSTS.JS_SERVER_SRC + '/**/*.js'];
 const CONSTS = require('./CONSTS');
 const gulp = require('gulp');
 const gulpChanged = require('gulp-changed');
 const gulpIf = require('gulp-if');
 const gulpLivereload = require('gulp-livereload');
+
+const APPSERVER_SRC = [CONSTS.JS_SERVER_SRC + '/**/*.js'];
 const SHARED_SRC = [CONSTS.JS_SHARED_SRC + '/**/*.js'];
 const STATIC_SRC = [CONSTS.IMG_SRC + '/**', CONSTS.FONT_SRC + '/**'];
 const TEMPLATES_SRC = [CONSTS.TEMPLATES_SRC + '/**'];
