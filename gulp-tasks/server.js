@@ -18,6 +18,7 @@ function runNodeMon () {
         ]
     }).on('start', () => {
         setTimeout((changed) => {
+            process.env.OVERRIDE_LR = 'false';
             return gulp.src('app.js')
                 .pipe(gulpLivereload({
                     port: CONSTS.LIVERELOAD_PORT

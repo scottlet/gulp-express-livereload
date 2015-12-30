@@ -17,6 +17,10 @@ function copyViews () {
 function copyFiles () {
     return copyFilesFn(APPSERVER_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SERVER_SRC, false);
 }
+function copySharedFilesLR () {
+    process.env.OVERRIDE_LR = 'true';
+    return copyFilesFn(SHARED_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SRC, false);
+}
 function copySharedFiles () {
     return copyFilesFn(SHARED_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SRC, false);
 }
@@ -25,15 +29,16 @@ function copyStaticFiles () {
 }
 function copyFilesFn (src, dest, base, reload) {
     return gulp.src(src, {base: base || '.'})
-    .pipe(gulpChanged(dest))
-    .pipe(gulp.dest(dest))
-    .pipe(gulpIf(reload, gulpLivereload({
-        port: CONSTS.LIVERELOAD_PORT
-    })));
+        .pipe(gulpChanged(dest))
+        .pipe(gulp.dest(dest))
+        .pipe(gulpIf(reload, gulpLivereload({
+            port: CONSTS.LIVERELOAD_PORT
+        })));
 }
 
 gulp.task('copyfiles', copyFiles);
 gulp.task('copysharedfiles', copySharedFiles);
+gulp.task('copysharedfilesLR', copySharedFilesLR);
 gulp.task('copystaticfiles', copyStaticFiles);
 gulp.task('copyviews', copyViews);
 gulp.task('copy', ['clean', 'copyfiles', 'copysharedfiles', 'copystaticfiles', 'copyviews']);

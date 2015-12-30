@@ -1,3 +1,4 @@
+/*eslint-disable no-console*/
 'use strict';
 const gulp = require('gulp');
 const gulpLivereload = require('gulp-livereload');
@@ -12,6 +13,7 @@ function watch() {
     const watchPublic = gulp.watch([CONSTS.IMG_SRC + '/**/*', CONSTS.FONT_SRC + '/**/*'], ['copystaticfiles']);
     const watchSass = gulp.watch([CONSTS.CSS_SRC_PATH + '/**/*'], ['sass-watch']);
     const watchServerJS = gulp.watch([CONSTS.JS_SERVER_SRC + '/**/*'], ['copyfiles']);
+    const watchSharedJS = gulp.watch([CONSTS.JS_SHARED_SRC + '/**/*'], ['copysharedfilesLR']);
     const watchTemplates = gulp.watch([CONSTS.TEMPLATES_SRC + '/**/*'], ['copyviews']);
     const watchTests = gulp.watch([CONSTS.TESTS_PATH + '/**/*.js', CONSTS.JS_SERVER_SRC + '/**/*'], ['mochaTest']);
     [
@@ -19,6 +21,7 @@ function watch() {
         watchPublic,
         watchSass,
         watchServerJS,
+        watchSharedJS,
         watchTemplates,
         watchTests
     ].forEach((w) => {

@@ -39,6 +39,7 @@
     "gulp-util": "^3.0.7",
     "mocha": "^2.3.4",
     "node-bourbon": "^4.2.3",
+    "node-normalize-scss": "^1.0.3",
     "postcss-assets": "^3.0.3",
     "proxy-middleware": "^0.15.0",
     "require-dir": "^0.3.0",

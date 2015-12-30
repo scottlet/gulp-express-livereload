@@ -14,7 +14,7 @@ const vinylBuffer = require('vinyl-buffer');
 const vinylSourceStream = require('vinyl-source-stream');
 const watchify = require('watchify');
 
-const isDev = CONSTS.NODE_ENV !== 'production';
+const isDev = (CONSTS.NODE_ENV !== 'production');
 
 let options = {
     entries: [CONSTS.JS_ENTRY],
@@ -27,6 +27,13 @@ if (isDev) {
 
 let b = browserify(options);
 
+function doLR () {
+    if (process.env.OVERRIDE_LR === 'true') {
+        return false;
+    }
+    return isDev;
+}
+
 function bundle() {
     return b.bundle()
     .pipe(gulpPlumber({errorHandler: gulpNotify.onError('Bundle Error: <%= error.message %>')}))
@@ -36,7 +43,7 @@ function bundle() {
     .pipe(gulpUglify())
     .pipe(gulpIf(isDev, gulpSourcemaps.write()))
     .pipe(gulp.dest(CONSTS.JS_DEST))
-    .pipe(gulpIf(isDev, gulpLivereload({
+    .pipe(gulpIf(doLR(), gulpLivereload({
         port: CONSTS.LIVERELOAD_PORT
     })));
 }
