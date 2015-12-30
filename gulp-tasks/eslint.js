@@ -4,10 +4,11 @@ const gulp = require('gulp');
 const gulpESLint = require('gulp-eslint');
 const gulpNotify = require('gulp-notify');
 const gulpPlumber = require('gulp-plumber');
+const CONSTS = require('./CONSTS');
 
 gulp.task('eslint',  () => {
-    return gulp.src(['gulpfile.js', 'gulp-tasks/**/*.js', 'src/js/**/*.js'])
-    .pipe(gulpPlumber({errorHandler: gulpNotify.onError('Bundle Error: <%= error.message %>')}))
+    return gulp.src([CONSTS.GULPFILE, CONSTS.GULP_TASKS + '/**/*.js', CONSTS.JS_SRC + '/**/*.js'])
+    .pipe(gulpPlumber({errorHandler: gulpNotify.onError('ESLint Error: <%= error.message %>')}))
     .pipe(gulpESLint())
     .pipe(gulpESLint.format())
     .pipe(gulpESLint.failAfterError());

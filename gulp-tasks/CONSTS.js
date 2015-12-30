@@ -13,6 +13,8 @@ module.exports = {
     DEPLOY_DEST: 'deploy',
     FONT_SRC: 'src/fonts',
     GULP_PORT: process.env.GULP_PORT || 9000,
+    GULP_TASKS: 'gulp-tasks',
+    GULPFILE: 'gulpfile.js',
     IMG_DEST: 'app/public/images/',
     IMG_SRC: 'src/images',
     JS_CLIENT_SRC: 'src/js/client/',

@@ -11,14 +11,14 @@ const gulpPostcss = require('gulp-postcss');
 const gulpSass = require('gulp-sass');
 const gulpSourcemaps = require('gulp-sourcemaps');
 const postcssAssets  = require('postcss-assets');
-const bourbon = require('node-bourbon').includePaths;
+const nodeBourbon = require('node-bourbon').includePaths;
 const CONSTS = require('./CONSTS');
 
 const isDev = CONSTS.NODE_ENV !== 'production';
 
 const sassOptions = {
     errLogToConsole: true,
-    includePaths: [bourbon]
+    includePaths: [nodeBourbon]
 };
 
 function styles() {

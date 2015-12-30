@@ -1,6 +1,7 @@
 'use strict';
 const gulp = require('gulp');
 const del = require('del');
+
 const CONSTS = require('./CONSTS');
 
 gulp.task('clean',  () => {

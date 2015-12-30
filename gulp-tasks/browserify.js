@@ -10,10 +10,11 @@ const gulpPlumber = require('gulp-plumber');
 const gulpSourcemaps = require('gulp-sourcemaps');
 const gulpUglify = require('gulp-uglify');
 const gulpUtil = require('gulp-util');
-const isDev = CONSTS.NODE_ENV !== 'production';
 const vinylBuffer = require('vinyl-buffer');
 const vinylSourceStream = require('vinyl-source-stream');
 const watchify = require('watchify');
+
+const isDev = CONSTS.NODE_ENV !== 'production';
 
 let options = {
     entries: [CONSTS.JS_ENTRY],
