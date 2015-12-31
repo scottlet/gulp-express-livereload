@@ -23,7 +23,7 @@ function runNodeMon () {
                 .pipe(gulpLivereload({
                     port: CONSTS.LIVERELOAD_PORT
                 }));
-        }, 750);
+        }, 1000);
     });
 }
 
