@@ -6,6 +6,7 @@ const gulpNodemon = require('gulp-nodemon');
 const proxyMiddleware = require('proxy-middleware');
 const connectLivereload = require('connect-livereload');
 const gulpLivereload = require('gulp-livereload');
+const gulpWait = require('gulp-wait');
 const url = require('url');
 const CONSTS = require('./CONSTS');
 
@@ -17,13 +18,12 @@ function runNodeMon () {
             CONSTS.NODEMON_IGNORE
         ]
     }).on('start', () => {
-        setTimeout((changed) => {
-            process.env.OVERRIDE_LR = 'false';
-            return gulp.src('app.js')
-                .pipe(gulpLivereload({
-                    port: CONSTS.LIVERELOAD_PORT
-                }));
-        }, 1000);
+        process.env.OVERRIDE_LR = 'false';
+        return gulp.src(CONSTS.APP)
+            .pipe(gulpWait(3400))
+            .pipe(gulpLivereload({
+                port: CONSTS.LIVERELOAD_PORT
+            }));
     });
 }
 
