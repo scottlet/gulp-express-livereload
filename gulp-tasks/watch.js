@@ -9,26 +9,21 @@ function watch() {
     gulpLivereload.listen({
         port: CONSTS.LIVERELOAD_PORT
     });
-    const watchCopiedTemplates = gulp.watch([CONSTS.TEMPLATES_DEST + '/**/*'], gulpLivereload.reload);
-    const watchPublic = gulp.watch([CONSTS.IMG_SRC + '/**/*', CONSTS.FONT_SRC + '/**/*'], ['copystaticfiles']);
-    const watchSass = gulp.watch([CONSTS.CSS_SRC_PATH + '/**/*'], ['sass-watch']);
-    const watchServerJS = gulp.watch([CONSTS.JS_SERVER_SRC + '/**/*'], ['copyfiles']);
-    const watchSharedJS = gulp.watch([CONSTS.JS_SHARED_SRC + '/**/*'], ['copysharedfilesLR']);
-    const watchTemplates = gulp.watch([CONSTS.TEMPLATES_SRC + '/**/*'], ['copyviews']);
-    const watchTests = gulp.watch([CONSTS.TESTS_PATH + '/**/*.js', CONSTS.JS_SERVER_SRC + '/**/*'], ['mochaTest']);
-    [
-        watchCopiedTemplates,
-        watchPublic,
-        watchSass,
-        watchServerJS,
-        watchSharedJS,
-        watchTemplates,
-        watchTests
-    ].forEach((w) => {
-        w.on('change', (e) => {
-            gulpUtil.log(e.path, e.type);
+    const watches = {
+        watchCopiedTemplates: gulp.watch([CONSTS.TEMPLATES_DEST + '/**/*'], gulpLivereload.reload),
+        watchPublic: gulp.watch([CONSTS.IMG_SRC + '/**/*', CONSTS.FONT_SRC + '/**/*'], ['copystaticfiles']),
+        watchSass: gulp.watch([CONSTS.CSS_SRC_PATH + '/**/*'], ['sass-watch']),
+        watchServerJS: gulp.watch([CONSTS.JS_SERVER_SRC + '/**/*'], ['copyfiles']),
+        watchSharedJS: gulp.watch([CONSTS.JS_SHARED_SRC + '/**/*'], ['copysharedfilesLR']),
+        watchTemplates: gulp.watch([CONSTS.TEMPLATES_SRC + '/**/*'], ['copyviews']),
+        watchTests: gulp.watch([CONSTS.TESTS_PATH + '/**/*.js', CONSTS.JS_SERVER_SRC + '/**/*'], ['mochaTest']),
+        watchLint: gulp.watch([CONSTS.JS_SRC + '/**/*'], ['eslint'])
+    };
+    for (let w in watches) {
+        watches[w].on('change', (e) => {
+            gulpUtil.log(w + ': ', e.path, e.type);
         });
-    });
+    }
 }
 
 gulp.task('watch', ['build'],  watch);

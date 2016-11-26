@@ -1,13 +1,15 @@
 'use strict';
 
 const RANDOM_PORT = 35729 - 50 + parseInt(Math.random() * 100, 10); // Randomize port for livereload.
+const userConfig = require('../src/options');
 
-module.exports = {
+const OPTIONS = {
+    APP_NAME: 'app.js',
     APP_PATH: 'bin',
     APP_SERVER: 'http://127.0.0.1:' + (process.env.PORT || 3000),
     APP: 'bin/www',
     APPSERVER_DEST: 'app/',
-    BROWSER_CONFIG: ['> 1%', 'IE 9'],
+    BROWSER_CONFIG: ['> 1%', 'ios >= 7', 'IE 9'],
     CSS_DEST_PATH: 'app/public/css/',
     CSS_SRC_PATH: 'src/sass',
     DEPLOY_DEST: 'deploy',
@@ -26,7 +28,10 @@ module.exports = {
     JS_SRC: 'src/js/',
     LIVERELOAD_PORT: process.env.LIVERELOAD_PORT || RANDOM_PORT,
     NODE_ENV: process.env.NODE_ENV,
-    NODEMON_IGNORE: ['gulp-tasks/**/*.js','node-modules/**/*.js','public/**','src/**','tests/**/*.js','gulpfile.js'],
+    NODEMON_DELAY: 3400,
+    NODEMON_IGNORE: [
+        'gulp-tasks/**','node-modules/**','app/public/**','src/**','tests/**','gulpfile.js'
+    ],
     ROUTES: 'app/routes/',
     SRC: 'src',
     STATIC_PATH: 'app/public/',
@@ -35,3 +40,10 @@ module.exports = {
     TESTS_PATH: 'src/tests/',
     VIEWS: 'app/views/'
 };
+
+if (userConfig) {
+    Object.assign(OPTIONS, userConfig);
+    process.env.APP_NAME = OPTIONS.APP_NAME;
+}
+
+module.exports = OPTIONS;

@@ -1,5 +1,7 @@
+/*eslint-disable no-console*/
 'use strict';
 
+const babelify = require('babelify');
 const browserify = require('browserify');
 const CONSTS = require('./CONSTS');
 const gulp = require('gulp');
@@ -17,9 +19,13 @@ const watchify = require('watchify');
 const isDev = (CONSTS.NODE_ENV !== 'production');
 
 let options = {
-    entries: [CONSTS.JS_ENTRY],
+    entries: [].concat(CONSTS.JS_ENTRY),
     cache: {},
-    packageCache: {}
+    debug: ((isDev) ? true : false),
+    packageCache: {},
+    transform: [babelify.configure({
+        presets: ['es2015', 'stage-2', 'react']
+    })]
 };
 if (isDev) {
     options.plugin = [watchify];
@@ -28,6 +34,7 @@ if (isDev) {
 let b = browserify(options);
 
 function doLR () {
+    console.log('check if lR is overridden', process.env.OVERRIDE_LR);
     if (process.env.OVERRIDE_LR === 'true') {
         return false;
     }
