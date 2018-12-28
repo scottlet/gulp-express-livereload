@@ -28,8 +28,8 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+.DS_Store
 
 app/
 deploy/
 src/
-config.js

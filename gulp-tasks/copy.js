@@ -1,4 +1,5 @@
 'use strict';
+
 const CONSTS = require('./CONSTS');
 const gulp = require('gulp');
 const gulpChanged = require('gulp-changed');
@@ -10,24 +11,33 @@ const SHARED_SRC = [CONSTS.JS_SHARED_SRC + '/**/*.js'];
 const STATIC_SRC = [CONSTS.IMG_SRC + '/**', CONSTS.FONT_SRC + '/**'];
 const TEMPLATES_SRC = [CONSTS.TEMPLATES_SRC + '/**'];
 
-function copyViews () {
+function copyViews() {
     return copyFilesFn(TEMPLATES_SRC, CONSTS.TEMPLATES_DEST, CONSTS.TEMPLATES_SRC, true);
 }
 
-function copyFiles () {
+function copyOptions() {
+    return copyFilesFn(['src/options.js', 'src/package.json'], CONSTS.APPSERVER_DEST, CONSTS.SRC, true);
+}
+
+function copyFiles() {
     return copyFilesFn(APPSERVER_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SERVER_SRC, false);
 }
-function copySharedFilesLR () {
+
+function copySharedFilesLR() {
     process.env.OVERRIDE_LR = 'true';
+
+    return copyFilesFn(SHARED_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SRC, true);
+}
+
+function copySharedFiles() {
     return copyFilesFn(SHARED_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SRC, false);
 }
-function copySharedFiles () {
-    return copyFilesFn(SHARED_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SRC, false);
-}
-function copyStaticFiles () {
+
+function copyStaticFiles() {
     return copyFilesFn(STATIC_SRC, CONSTS.STATIC_PATH, CONSTS.SRC, true);
 }
-function copyFilesFn (src, dest, base, reload) {
+
+function copyFilesFn(src, dest, base, reload) {
     return gulp.src(src, {base: base || '.'})
         .pipe(gulpChanged(dest))
         .pipe(gulp.dest(dest))
@@ -37,8 +47,9 @@ function copyFilesFn (src, dest, base, reload) {
 }
 
 gulp.task('copyfiles', copyFiles);
+gulp.task('copyoptions', copyOptions);
 gulp.task('copysharedfiles', copySharedFiles);
 gulp.task('copysharedfilesLR', copySharedFilesLR);
 gulp.task('copystaticfiles', copyStaticFiles);
 gulp.task('copyviews', copyViews);
-gulp.task('copy', ['clean', 'copyfiles', 'copysharedfiles', 'copystaticfiles', 'copyviews']);
+gulp.task('copy', ['clean', 'copyfiles', 'copysharedfiles', 'copystaticfiles', 'copyviews', 'copyoptions']);
