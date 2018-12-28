@@ -4,7 +4,7 @@
 
 const gulp = require('gulp');
 const gulpLivereload = require('gulp-livereload');
-const gulpUtil = require('gulp-util');
+const fancyLog = require('fancy-log');
 const CONSTS = require('./CONSTS');
 
 function watch() {
@@ -16,7 +16,7 @@ function watch() {
         'copystaticfiles', 'sass-watch']);
     const watchSass = gulp.watch([CONSTS.SASS_SRC + '/**/*'], ['sass-watch']);
     const watchServerJS = gulp.watch([CONSTS.JS_SERVER_SRC + '/**/*'], ['copyfiles']);
-    const watchSharedJS = gulp.watch([CONSTS.JS_SHARED_SRC + '/**/*'], ['copysharedfilesLR']);
+    const watchSharedJS = gulp.watch([CONSTS.JS_SHARED_SRC + '/**/*'], ['copysharedfiles']);
     const watchTemplates = gulp.watch([CONSTS.TEMPLATES_SRC + '/**/*'], ['copyviews']);
     const watchTests = gulp.watch([CONSTS.TESTS_PATH + '/**/*.js', CONSTS.JS_SERVER_SRC + '/**/*'], ['mochaTest']);
 
@@ -30,7 +30,7 @@ function watch() {
         watchTests
     ].forEach((w) => {
         w.on('change', (e) => {
-            gulpUtil.log(e.path, e.type);
+            fancyLog(e.path, e.type);
         });
     });
 }

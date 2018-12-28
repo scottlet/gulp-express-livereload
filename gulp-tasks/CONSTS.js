@@ -13,7 +13,7 @@ let CONSTS = {
     APP_SERVER: 'http://127.0.0.1:' + (process.env.PORT || APPSERVER_PORT),
     APP: 'bin/www',
     APPSERVER_DEST: 'app/',
-    BROWSER_CONFIG: ['> 1%', 'IE 9'],
+    BROWSER_CONFIG: ['> 2%', 'last 1 version', 'IE 11', 'not dead'],
     CSS_DEST: 'app/public/css/',
     DEPLOY_DEST: 'deploy',
     FONT_SRC: 'src/fonts',

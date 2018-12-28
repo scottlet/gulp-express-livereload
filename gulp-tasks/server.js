@@ -13,15 +13,17 @@ const CONSTS = require('./CONSTS');
 
 function runNodeMon() {
     gulpNodemon({
-        script: CONSTS.APP,
+        script: CONSTS.APPSERVER_DEST + CONSTS.APP,
         ext: 'js',
+        watch: ['app'],
         ignore: [
             CONSTS.NODEMON_IGNORE
         ]
     }).on('start', () => {
         process.env.OVERRIDE_LR = 'false';
+        console.log('restarted');
 
-        return gulp.src(CONSTS.APP)
+        return gulp.src(CONSTS.APPSERVER_DEST + CONSTS.APP)
             .pipe(gulpWait(CONSTS.NODEMON_WAIT))
             .pipe(gulpLivereload({
                 port: CONSTS.LIVERELOAD_PORT
