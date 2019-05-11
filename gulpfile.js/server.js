@@ -1,17 +1,17 @@
 'use strict';
 
-/*eslint-disable no-console*/
-const gulp = require('gulp');
+const {src, series} = require('gulp');
 const gulpConnect = require('gulp-connect');
 const gulpNodemon = require('gulp-nodemon');
 const proxyMiddleware = require('proxy-middleware');
 const connectLivereload = require('connect-livereload');
 const gulpLivereload = require('gulp-livereload');
 const gulpWait = require('gulp-wait');
+const fancyLog = require('fancy-log');
 const url = require('url');
 const CONSTS = require('./CONSTS');
 
-function runNodeMon() {
+function runNodeMon(cb) {
     gulpNodemon({
         script: CONSTS.APPSERVER_DEST + CONSTS.APP,
         ext: 'js',
@@ -21,17 +21,19 @@ function runNodeMon() {
         ]
     }).on('start', () => {
         process.env.OVERRIDE_LR = 'false';
-        console.log('restarted');
+        fancyLog('restarted');
 
-        return gulp.src(CONSTS.APPSERVER_DEST + CONSTS.APP)
+        return src(CONSTS.APPSERVER_DEST + CONSTS.APP)
             .pipe(gulpWait(CONSTS.NODEMON_WAIT))
             .pipe(gulpLivereload({
                 port: CONSTS.LIVERELOAD_PORT
             }));
     });
+
+    cb();
 }
 
-function makeServer() {
+function makeServer(cb) {
     const port = CONSTS.GULP_PORT;
     const proxyOptions = url.parse(CONSTS.APP_SERVER);
 
@@ -47,9 +49,12 @@ function makeServer() {
             ];
         }
     });
-    console.log('server http://127.0.0.1:' + port);
+    cb();
+    fancyLog('server http://127.0.0.1:' + port);
 }
 
-gulp.task('nodemon', ['copy'], runNodeMon);
-gulp.task('makeserver', ['copy', 'browserify', 'sass', 'watch'], makeServer);
-gulp.task('server', ['build', 'watch', 'nodemon', 'makeserver']);
+module.exports = series(runNodeMon, makeServer);
+
+// gulp.task('nodemon', ['copy'], runNodeMon);
+// gulp.task('makeserver', ['copy', 'browserify', 'sass', 'watch'], makeServer);
+// gulp.task('server', ['build', 'watch', 'nodemon', 'makeserver']);

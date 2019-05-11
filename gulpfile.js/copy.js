@@ -3,7 +3,7 @@
 /*eslint-disable no-console*/
 
 const CONSTS = require('./CONSTS');
-const gulp = require('gulp');
+const {series, parallel, task, src, dest} = require('gulp');
 const gulpChanged = require('gulp-changed');
 const gulpIf = require('gulp-if');
 const gulpLivereload = require('gulp-livereload');
@@ -45,20 +45,39 @@ function copyStaticFiles() {
     return copyFilesFn(STATIC_SRC, CONSTS.STATIC_PATH, CONSTS.SRC, true);
 }
 
-function copyFilesFn(src, dest, base, reload) {
-    return gulp.src(src, {base: base || '.'})
-        .pipe(gulpChanged(dest))
-        .pipe(gulp.dest(dest))
+function copyFilesFn(source, destination, base, reload) {
+    return src(source, {base: base || '.'})
+        .pipe(gulpChanged(destination))
+        .pipe(dest(destination))
         .pipe(gulpIf(reload, gulpLivereload({
             port: CONSTS.LIVERELOAD_PORT
         })));
 }
 
-gulp.task('copybin', copyBin);
-gulp.task('copyfiles', copyFiles);
-gulp.task('copyoptions', copyOptions);
-gulp.task('copysharedfiles', copySharedFiles);
-gulp.task('copysharedfilesLR', copySharedFilesLR);
-gulp.task('copystaticfiles', copyStaticFiles);
-gulp.task('copyviews', copyViews);
-gulp.task('copy', ['clean', 'copybin', 'copyfiles', 'copysharedfiles', 'copystaticfiles', 'copyviews', 'copyoptions']);
+task('copysharedfilesLR', series(copySharedFilesLR));
+task('copysharedfiles', series(copySharedFiles));
+task('copystaticfiles', series(copyStaticFiles));
+task('copyfiles', series(copyFiles));
+task('copyviews', copyViews);
+task('copyoptions', copyOptions);
+task('copybin', copyBin);
+
+// gulp.task('copybin', copyBin);
+// gulp.task('copyfiles', copyFiles);
+// gulp.task('copyoptions', copyOptions);
+// gulp.task('copysharedfiles', copySharedFiles);
+// gulp.task('copysharedfilesLR', copySharedFilesLR);
+// gulp.task('copystaticfiles', copyStaticFiles);
+// gulp.task('copyviews', copyViews);
+// gulp.task('copy',
+// ['clean', 'copybin', 'copyfiles', 'copysharedfiles', 'copystaticfiles', 'copyviews', 'copyoptions']);
+//
+
+module.exports = parallel(
+    copyBin,
+    copyFiles,
+    copyOptions,
+    copySharedFiles,
+    copyStaticFiles,
+    copyViews
+);

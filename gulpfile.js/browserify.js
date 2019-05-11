@@ -2,10 +2,12 @@
 
 'use strict';
 
+const {dest} = require('gulp');
 const browserify = require('browserify');
+const commonShakeify = require('common-shakeify');
 const CONSTS = require('./CONSTS');
+const fancyLog = require('fancy-log');
 const glob = require('glob');
-const gulp = require('gulp');
 const gulpIf = require('gulp-if');
 const gulpLivereload = require('gulp-livereload');
 const gulpNotify = require('gulp-notify');
@@ -13,7 +15,7 @@ const gulpPlumber = require('gulp-plumber');
 const gulpReplace = require('gulp-replace');
 const gulpSourcemaps = require('gulp-sourcemaps');
 const gulpUglify = require('gulp-uglify');
-const fancyLog = require('fancy-log');
+const merge2 = require('merge2');
 const vinylBuffer = require('vinyl-buffer');
 const vinylSourceStream = require('vinyl-source-stream');
 const watchify = require('watchify');
@@ -46,7 +48,8 @@ function addToBrowserify(entry) {
         delete uglifyOptions.compress.drop_console;
     }
 
-    const b = browserify(options);
+    const b = browserify(options)
+        .plugin(commonShakeify, {});
 
     function doLR() {
         if (process.env.OVERRIDE_LR === 'true') {
@@ -69,7 +72,7 @@ function addToBrowserify(entry) {
             .pipe(gulpSourcemaps.init({loadMaps: true}))
             .pipe(gulpUglify(uglifyOptions))
             .pipe(gulpIf(isDev, gulpSourcemaps.write()))
-            .pipe(gulp.dest(CONSTS.JS_DEST))
+            .pipe(dest(CONSTS.JS_DEST))
             .pipe(gulpIf(doLR(), gulpLivereload({
                 port: CONSTS.LIVERELOAD_PORT
             })));
@@ -78,12 +81,16 @@ function addToBrowserify(entry) {
     b.on('update', bundle);
     b.on('log', fancyLog);
     b.on('error', fancyLog);
-    bundle();
+
+    return bundle();
 }
 
-function createbundle(cb) {
-    entries.forEach(addToBrowserify);
-    cb();
+function createbundle() {
+    const tasks = entries.map(addToBrowserify);
+
+    return merge2(tasks);
 }
 
-gulp.task('browserify', createbundle);
+//gulp.task('browserify', createbundle);
+//
+module.exports = createbundle;
