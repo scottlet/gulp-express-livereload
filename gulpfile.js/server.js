@@ -22,6 +22,7 @@ function runNodeMon(cb) {
     }).on('start', () => {
         process.env.OVERRIDE_LR = 'false';
         fancyLog('restarted');
+        cb();
 
         return src(CONSTS.APPSERVER_DEST + CONSTS.APP)
             .pipe(gulpWait(CONSTS.NODEMON_WAIT))
@@ -29,8 +30,6 @@ function runNodeMon(cb) {
                 port: CONSTS.LIVERELOAD_PORT
             }));
     });
-
-    cb();
 }
 
 function makeServer(cb) {

@@ -6,7 +6,15 @@ const APPSERVER_PORT = 3000;
 const SERVER_PORT = 9000;
 const {name, version} = require('../package.json');
 
-const OPTIONS = require('../src/options');
+let OPTIONS = {};
+
+try {
+    OPTIONS = require('../src/options.js');
+} catch (ex) {} //eslint-disable-line
+
+if (!process.env.LIVERELOAD_PORT) {
+    process.env.LIVERELOAD_PORT = RANDOM_PORT;
+}
 
 let CONSTS = {
     APP_PATH: 'bin',
@@ -28,7 +36,7 @@ let CONSTS = {
     JS_SERVER_SRC:'src/js/server/',
     JS_SHARED_SRC: 'src/js/shared/',
     JS_SRC: 'src/js/',
-    LIVERELOAD_PORT: process.env.LIVERELOAD_PORT || RANDOM_PORT,
+    LIVERELOAD_PORT: process.env.LIVERELOAD_PORT,
     NAME: OPTIONS.NAME || name,
     NODE_ENV: process.env.NODE_ENV,
     NODEMON_IGNORE: [
@@ -52,6 +60,6 @@ let CONSTS = {
     WAIT: 3050
 };
 
-CONSTS = Object.assign(CONSTS, OPTIONS);
+CONSTS = Object.assign(CONSTS, OPTIONS || {});
 
 module.exports = CONSTS;

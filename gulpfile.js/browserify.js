@@ -10,7 +10,7 @@ const fancyLog = require('fancy-log');
 const glob = require('glob');
 const gulpIf = require('gulp-if');
 const gulpLivereload = require('gulp-livereload');
-const gulpNotify = require('gulp-notify');
+const {onError} = require('gulp-notify');
 const gulpPlumber = require('gulp-plumber');
 const gulpReplace = require('gulp-replace');
 const gulpSourcemaps = require('gulp-sourcemaps');
@@ -61,7 +61,7 @@ function addToBrowserify(entry) {
 
     function bundle() {
         return b.bundle()
-            .pipe(gulpPlumber({errorHandler: gulpNotify.onError(error => `JS Bundle Error: ${error.message}`)}))
+            .pipe(gulpPlumber({errorHandler: onError(error => `JS Bundle Error: ${error.message}`)}))
             .pipe(vinylSourceStream(name + CONSTS.JS_OUTPUT))
             .pipe(vinylBuffer())
             .pipe(gulpReplace('$$oldMobile$$', CONSTS.BREAKPOINTS.OLD_MOBILE))
