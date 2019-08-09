@@ -45,7 +45,7 @@
     "autoprefixer": "^9.5.1",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
-    "common-shakeify": "^0.6.0",
+    "common-shakeify": "^0.6.2",
     "connect-livereload": "^0.6.1",
     "css-mqpacker": "^7.0.0",
     "csswring": "^7.0.0",
