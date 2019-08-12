@@ -67,7 +67,7 @@
     "gulp-uglify": "^3.0.2",
     "gulp-wait": "0.0.2",
     "merge2": "^1.2.3",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.0",
     "node-normalize-scss": "^8.0.0",
     "postcss-assets": "^5.0.0",
     "proxy-middleware": "^0.15.0",
