@@ -72,7 +72,7 @@
     "postcss-assets": "^5.0.0",
     "proxy-middleware": "^0.15.0",
     "require-dir": "^1.2.0",
-    "sinon": "^7.3.2",
+    "sinon": "^7.4.2",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.11.1"
