@@ -1,9 +1,7 @@
-'use strict';
-
 /*eslint-disable no-console*/
 
 const CONSTS = require('./CONSTS');
-const {parallel, src, dest} = require('gulp');
+const { parallel, src, dest } = require('gulp');
 const gulpChanged = require('gulp-changed');
 const gulpIf = require('gulp-if');
 const gulpLivereload = require('gulp-livereload');
@@ -31,12 +29,6 @@ function copyFiles() {
     return copyFilesFn(APPSERVER_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SERVER_SRC, false);
 }
 
-// function copySharedFilesLR() {
-//     process.env.OVERRIDE_LR = 'true';
-//
-//     return copyFilesFn(SHARED_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SRC, true);
-// }
-
 function copySharedFiles() {
     return copyFilesFn(SHARED_SRC, CONSTS.APPSERVER_DEST, CONSTS.JS_SRC, false);
 }
@@ -46,24 +38,13 @@ function copyStaticFiles() {
 }
 
 function copyFilesFn(source, destination, base, reload) {
-    return src(source, {base: base || '.'})
+    return src(source, { base: base || '.' })
         .pipe(gulpChanged(destination))
         .pipe(dest(destination))
         .pipe(gulpIf(reload, gulpLivereload({
             port: CONSTS.LIVERELOAD_PORT
         })));
 }
-
-// gulp.task('copybin', copyBin);
-// gulp.task('copyfiles', copyFiles);
-// gulp.task('copyoptions', copyOptions);
-// gulp.task('copysharedfiles', copySharedFiles);
-// gulp.task('copysharedfilesLR', copySharedFilesLR);
-// gulp.task('copystaticfiles', copyStaticFiles);
-// gulp.task('copyviews', copyViews);
-// gulp.task('copy',
-// ['clean', 'copybin', 'copyfiles', 'copysharedfiles', 'copystaticfiles', 'copyviews', 'copyoptions']);
-//
 
 module.exports = {
     default: parallel(

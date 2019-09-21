@@ -1,8 +1,6 @@
 /*eslint-disable no-console*/
 
-'use strict';
-
-const {dest} = require('gulp');
+const { dest } = require('gulp');
 const browserify = require('browserify');
 const commonShakeify = require('common-shakeify');
 const CONSTS = require('./CONSTS');
@@ -10,7 +8,7 @@ const fancyLog = require('fancy-log');
 const glob = require('glob');
 const gulpIf = require('gulp-if');
 const gulpLivereload = require('gulp-livereload');
-const {onError} = require('gulp-notify');
+const { onError } = require('gulp-notify');
 const gulpPlumber = require('gulp-plumber');
 const gulpReplace = require('gulp-replace');
 const gulpSourcemaps = require('gulp-sourcemaps');
@@ -43,13 +41,25 @@ function addToBrowserify(entry) {
         }
     };
 
+    let babelOptions = {};
+
     if (isDev) {
         options.plugin = [watchify];
         delete uglifyOptions.compress.drop_console;
+        babelOptions = { sourceMaps: true };
     }
 
     const b = browserify(options)
         .plugin(commonShakeify, {});
+
+    b.transform('babelify', {
+        presets: ['@babel/preset-env'],
+        ...babelOptions
+    });
+
+    if (isDev) {
+        b.plugin('tinyify', { flat: false });
+    }
 
     function doLR() {
         if (process.env.OVERRIDE_LR === 'true') {
@@ -61,7 +71,7 @@ function addToBrowserify(entry) {
 
     function bundle() {
         return b.bundle()
-            .pipe(gulpPlumber({errorHandler: onError(error => `JS Bundle Error: ${error.message}`)}))
+            .pipe(gulpPlumber({ errorHandler: onError(error => `JS Bundle Error: ${error.message}`) }))
             .pipe(vinylSourceStream(name + CONSTS.JS_OUTPUT))
             .pipe(vinylBuffer())
             .pipe(gulpReplace('$$oldMobile$$', CONSTS.BREAKPOINTS.OLD_MOBILE))
@@ -69,7 +79,7 @@ function addToBrowserify(entry) {
             .pipe(gulpReplace('$$smalltablet$$', CONSTS.BREAKPOINTS.SMALL_TABLET))
             .pipe(gulpReplace('$$tablet$$', CONSTS.BREAKPOINTS.TABLET))
             .pipe(gulpReplace('$$smalldesktop$$', CONSTS.BREAKPOINTS.SMALL_DESKTOP))
-            .pipe(gulpSourcemaps.init({loadMaps: true}))
+            .pipe(gulpSourcemaps.init({ loadMaps: true }))
             .pipe(gulpUglify(uglifyOptions))
             .pipe(gulpIf(isDev, gulpSourcemaps.write()))
             .pipe(dest(CONSTS.JS_DEST))

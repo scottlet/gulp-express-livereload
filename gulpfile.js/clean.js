@@ -1,6 +1,4 @@
-'use strict';
-
-const {sync} = require('del');
+const { sync } = require('del');
 
 const CONSTS = require('./CONSTS');
 

@@ -1,13 +1,11 @@
-'use strict';
-
-const {series, parallel} = require('gulp');
+const { series, parallel } = require('gulp');
 
 const browserify = require('./browserify');
 const clean = require('./clean');
 const copy = require('./copy').default;
 const deploy = require('./deploy');
 const eslint = require('./eslint');
-const {mochaTest} = require('./mochaTest');
+const { mochaTest } = require('./mochaTest');
 const sass = require('./sass');
 const buildServer = require('./server');
 const watch = require('./watch');

@@ -10,7 +10,7 @@ let OPTIONS = {};
 
 try {
     OPTIONS = require('../src/options.js');
-} catch (ex) {} //eslint-disable-line
+} catch (ex) {console.log('ERROR', ex)} //eslint-disable-line
 
 if (!process.env.LIVERELOAD_PORT) {
     process.env.LIVERELOAD_PORT = RANDOM_PORT;
@@ -21,7 +21,6 @@ let CONSTS = {
     APP_SERVER: 'http://127.0.0.1:' + (process.env.PORT || APPSERVER_PORT),
     APP: 'bin/www',
     APPSERVER_DEST: 'app/',
-    BROWSER_CONFIG: ['> 2%', 'last 1 version', 'IE 11', 'not dead'],
     CSS_DEST: 'app/public/css/',
     DEPLOY_DEST: 'deploy',
     FONT_SRC: 'src/fonts',

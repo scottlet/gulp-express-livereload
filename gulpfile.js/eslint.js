@@ -1,8 +1,6 @@
-'use strict';
-
-const {src} = require('gulp');
+const { src } = require('gulp');
 const gulpESLint = require('gulp-eslint');
-const {onError} = require('gulp-notify');
+const { onError } = require('gulp-notify');
 const gulpChangedInPlace = require('gulp-changed-in-place');
 const gulpPlumber = require('gulp-plumber');
 const CONSTS = require('./CONSTS');
@@ -16,7 +14,7 @@ function short(a) {
 function lint() {
     return src([CONSTS.GULPFILE, CONSTS.GULP_TASKS + '/**/*.js', CONSTS.JS_SRC + '/**/*.js'])
         .pipe(gulpPlumber({
-            errorHandler: onError((error) => {
+            errorHandler: onError(error => {
                 return 'ESLint Error: ' + short(error.fileName) + ':<%= error.lineNumber %>, <%= error.message %>';
             })
         }))

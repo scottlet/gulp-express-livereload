@@ -21,9 +21,9 @@ change anything else.
 
 Requires global gulp and gulp-cli to be installed
 
-Also requires node/npm, obvs. 4.x or above.
+Also requires node/npm, obvs. 12.x or above.
 
-If you have homebrew installed on OSX this is as simple as `brew install node6-lte`.
+If you have homebrew installed on OSX this is as simple as `brew install node`.
 
 If you don't have homebrew on OSX, visit [http://brew.sh](http://brew.sh)
 
@@ -54,6 +54,7 @@ of this repo whenever you wish, but keep the src folder separately under source 
 
 Changelog:
 
+* 3.0.0 - Added in babel support as it's fast now. Deploy works correctly. Tweaked some stuff around how CSS is built. Made the javascript minification better. Tweaked the eslint settings.
 * 1.1.0 - A few changes reorganising things. Updated everything to work correctly.
 Changed a lot of the dependencies and tweaked the watchers and notification systems. Added the ability to override options.
 

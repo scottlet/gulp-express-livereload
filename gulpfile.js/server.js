@@ -1,6 +1,4 @@
-'use strict';
-
-const {src, series} = require('gulp');
+const { src, series } = require('gulp');
 const gulpConnect = require('gulp-connect');
 const gulpNodemon = require('gulp-nodemon');
 const proxyMiddleware = require('proxy-middleware');
@@ -39,7 +37,7 @@ function makeServer(cb) {
     proxyOptions.route = '/';
     gulpConnect.server({
         port,
-        middleware: (server) => {
+        middleware: server => {
             return [
                 connectLivereload({
                     port: CONSTS.LIVERELOAD_PORT
@@ -53,7 +51,3 @@ function makeServer(cb) {
 }
 
 module.exports = series(runNodeMon, makeServer);
-
-// gulp.task('nodemon', ['copy'], runNodeMon);
-// gulp.task('makeserver', ['copy', 'browserify', 'sass', 'watch'], makeServer);
-// gulp.task('server', ['build', 'watch', 'nodemon', 'makeserver']);

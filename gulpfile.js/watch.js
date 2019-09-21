@@ -1,14 +1,11 @@
 /*eslint-disable no-console*/
-
-'use strict';
-
-const {parallel, watch} = require('gulp');
+const { parallel, watch } = require('gulp');
 const gulpLivereload = require('gulp-livereload');
 const fancyLog = require('fancy-log');
 const CONSTS = require('./CONSTS');
 const sass = require('./sass');
-const {copyStaticFiles, copyFiles, copySharedFiles, copyViews} = require('./copy');
-const {mochaTest} = require('./mochaTest');
+const { copyStaticFiles, copyFiles, copySharedFiles, copyViews } = require('./copy');
+const { mochaTest } = require('./mochaTest');
 
 function watchers(cb) {
     gulpLivereload.listen({
@@ -31,15 +28,12 @@ function watchers(cb) {
         watchSharedJS,
         watchTemplates,
         watchTests
-    ].forEach((w) => {
-        w.on('change', (path) => {
+    ].forEach(w => {
+        w.on('change', path => {
             fancyLog(`file ${path} was changed`);
         });
     });
     cb();
 }
-
-//task('watch', ['build'], watch);
-//
 
 module.exports = watchers;
