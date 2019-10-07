@@ -60,7 +60,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsdoc": "^15.9.2",
     "gulp": "^4",
-    "gulp-changed": "^4.0.1",
+    "gulp-changed": "^4.0.2",
     "gulp-changed-in-place": "^2.3.0",
     "gulp-connect": "^5.7.0",
     "gulp-eslint": "^6.0.0",
