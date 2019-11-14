@@ -58,7 +58,7 @@
     "csswring": "^7.0.0",
     "del": "^5.1.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsdoc": "^15.9.2",
+    "eslint-plugin-jsdoc": "^18.0.1",
     "gulp": "^4",
     "gulp-changed": "^4.0.1",
     "gulp-changed-in-place": "^2.3.0",
