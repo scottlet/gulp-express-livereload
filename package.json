@@ -85,7 +85,7 @@
     "postcss-preset-env": "^6.7.0",
     "proxy-middleware": "^0.15.0",
     "require-dir": "^1.2.0",
-    "sinon": "^7.4.2",
+    "sinon": "^8.1.0",
     "tinyify": "^2.5.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
