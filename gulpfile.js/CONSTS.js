@@ -1,10 +1,11 @@
-'use strict';
+const fs = require('fs');
+const { name, version } = JSON.parse(fs.readFileSync('./package.json'));
+const fancyLog = require('fancy-log');
 
 const LIVERELOAD = 35679;
 const RANDOM_PORT = LIVERELOAD - 50 + parseInt(Math.random() * 100); // Randomize port for livereload.
 const APPSERVER_PORT = 3000;
 const SERVER_PORT = 9000;
-const {name, version} = require('../package.json');
 
 let OPTIONS = {};
 
@@ -14,6 +15,8 @@ try {
 
 if (!process.env.LIVERELOAD_PORT) {
     process.env.LIVERELOAD_PORT = RANDOM_PORT;
+} else {
+    fancyLog(`LiveReload on ${process.env.LIVERELOAD_PORT}`);
 }
 
 let CONSTS = {
@@ -21,6 +24,13 @@ let CONSTS = {
     APP_SERVER: 'http://127.0.0.1:' + (process.env.PORT || APPSERVER_PORT),
     APP: 'bin/www',
     APPSERVER_DEST: 'app/',
+    BREAKPOINTS: {
+        OLD_MOBILE: 320,
+        MOBILE: 767,
+        SMALL_TABLET: 600,
+        TABLET: 979,
+        SMALL_DESKTOP: 1440
+    },
     CSS_DEST: 'app/public/css/',
     DEPLOY_DEST: 'deploy',
     FONT_SRC: 'src/fonts',
