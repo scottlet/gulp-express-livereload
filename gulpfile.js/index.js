@@ -21,5 +21,6 @@ module.exports = {
     build,
     browserify,
     eslint,
-    copy
+    copy,
+    watch
 };
