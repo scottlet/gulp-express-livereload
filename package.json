@@ -8,9 +8,7 @@
     "livereload",
     "sass"
   ],
-  "browserslist": [
-    "defaults"
-  ],
+  "browserslist": ["> 2%", "last 1 version", "IE 11", "not dead"],
   "repository": {
     "type": "git",
     "url": "https://github.com/scottbert/gulp-express-livereload.git"
