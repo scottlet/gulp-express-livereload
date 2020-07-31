@@ -43,7 +43,7 @@
     "express-handlebars": "^5.1.0",
     "morgan": "^1.10.0",
     "serve-favicon": "^2.5.0",
-    "snyk": "^1.369.1"
+    "snyk": "^1.369.2"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
