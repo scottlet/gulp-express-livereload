@@ -1,7 +1,7 @@
 const { src, series } = require('gulp');
 const gulpConnect = require('gulp-connect');
 const gulpNodemon = require('gulp-nodemon');
-const proxyMiddleware = require('proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const connectLivereload = require('connect-livereload');
 const gulpLivereload = require('gulp-livereload');
 const gulpWait = require('gulp-wait');
@@ -32,17 +32,17 @@ function runNodeMon(cb) {
 
 function makeServer(cb) {
     const port = CONSTS.GULP_PORT;
-    const proxyOptions = url.parse(CONSTS.APP_SERVER);
 
-    proxyOptions.route = '/';
     gulpConnect.server({
         port,
-        middleware: server => {
+        middleware: () => {
             return [
                 connectLivereload({
                     port: CONSTS.LIVERELOAD_PORT
                 }),
-                proxyMiddleware(proxyOptions)
+                createProxyMiddleware('/', {
+                    target: url.parse(CONSTS.APP_SERVER)
+                })
             ];
         }
     });
