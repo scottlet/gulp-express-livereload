@@ -17,7 +17,7 @@ const server = series(build, watch, buildServer);
 module.exports = {
     default: server,
     server,
-    deploy,
+    deploy: series(build, deploy),
     build,
     browserify,
     eslint,
