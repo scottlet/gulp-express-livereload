@@ -47,7 +47,7 @@
     "fibers": "^5.0.0",
     "http-proxy-middleware": "^1.0.6",
     "morgan": "^1.10.0",
-    "postcss": "^8.1.9",
+    "postcss": "^8.1.10",
     "sass": "^1.29.0",
     "serve-favicon": "^2.5.0",
     "snyk": "^1.430.0"
