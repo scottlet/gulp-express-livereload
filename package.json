@@ -50,7 +50,7 @@
     "postcss": "^8.1.9",
     "sass": "^1.29.0",
     "serve-favicon": "^2.5.0",
-    "snyk": "^1.430.0"
+    "snyk": "^1.431.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",
