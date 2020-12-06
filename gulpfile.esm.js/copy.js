@@ -23,7 +23,8 @@ const {
     STATIC_PATH,
     TEMPLATES_DEST,
     TEMPLATES_SRC,
-    VIDEO_SRC
+    VIDEO_SRC,
+    VERSION
 } = CONSTS;
 
 const APPSERVER_SRC = [`${JS_SERVER_SRC}**/*.js`];
@@ -37,7 +38,7 @@ const STATIC_SRC = [
 const TEMPLATES_SOURCE = [`${TEMPLATES_SRC}**`];
 
 function copyBin() {
-    return copyFilesFn([SRC + '/' + APP], APPSERVER_DEST, SRC);
+    return copyFilesFn([SRC + '/' + APP, SRC + '/' + 'bin/app.js'], APPSERVER_DEST, SRC);
 }
 
 function copyViews() {
@@ -67,7 +68,7 @@ function copySharedFiles() {
 }
 
 function copyStaticFiles() {
-    return copyFilesFn(STATIC_SRC, STATIC_PATH, SRC, true);
+    return copyFilesFn(STATIC_SRC, STATIC_PATH + '/' + VERSION, SRC, true);
 }
 
 function copyFilesFn(source, destination, base = '.', reload) {

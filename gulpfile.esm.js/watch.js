@@ -26,15 +26,8 @@ function watchers(cb) {
         port: LIVERELOAD_PORT
     });
 
-    const runSass = parallel(sass);
-    const runCopyFiles = parallel(copyFiles);
-    const runCopySharedFiles = parallel(copySharedFiles);
-    const runCopyViews = parallel(copyViews);
-    const runMochaTest = parallel(mochaTest);
-    const liveReload = parallel(reload);
-    const runCopyAndSass = parallel(copyStaticFiles, sass);
 
-    const watchCopiedTemplates = watch([`${TEMPLATES_DEST}**/*`], liveReload);
+    const watchCopiedTemplates = watch([`${TEMPLATES_DEST}**/*`], parallel(reload));
     const watchPublic = watch(
         [
             `${IMG_SRC}/**/*`,
@@ -43,16 +36,16 @@ function watchers(cb) {
             `${VIDEO_SRC}/**/*`
         ],
         { allowEmpty: true },
-        runCopyAndSass
+        parallel(copyStaticFiles, sass)
     );
 
-    const watchSass = watch([`${SASS_SRC}/**/*`], runSass);
-    const watchServerJS = watch([`${JS_SERVER_SRC}**/*`], runCopyFiles);
-    const watchSharedJS = watch([`${JS_SHARED_SRC}**/*`], runCopySharedFiles);
-    const watchTemplates = watch([`${TEMPLATES_SRC}**/*`], runCopyViews);
+    const watchSass = watch([`${SASS_SRC}**/*`], parallel(sass));
+    const watchServerJS = watch([`${JS_SERVER_SRC}**/*`], parallel(copyFiles));
+    const watchSharedJS = watch([`${JS_SHARED_SRC}**/*`], parallel(copySharedFiles));
+    const watchTemplates = watch([`${TEMPLATES_SRC}**/*`], parallel(copyViews));
     const watchTests = watch(
         [`${TESTS_PATH}/**/*.js`, `${JS_SERVER_SRC}/**/*`],
-        runMochaTest
+        parallel(mochaTest)
     );
 
     [

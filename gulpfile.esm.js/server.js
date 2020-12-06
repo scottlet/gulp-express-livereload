@@ -23,7 +23,7 @@ const {
 
 function runNodeMon(cb) {
     return gulpNodemon({
-        script: APPSERVER_DEST + APP,
+        script: `${APPSERVER_DEST + APP}`,
         ext: 'js',
         watch: [APPSERVER_DEST],
         ignore: [NODEMON_IGNORE]
