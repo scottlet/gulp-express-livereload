@@ -1,12 +1,14 @@
-import { src, series } from 'gulp';
-import gulpConnect from 'gulp-connect';
-import gulpNodemon from 'gulp-nodemon';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import { src, series } from 'gulp';
+import connectCORS from 'connect-cors';
 import connectLivereload from 'connect-livereload';
-import gulpLivereload from 'gulp-livereload';
-import gulpWait from 'gulp-wait';
 import fancyLog from 'fancy-log';
+import gulpConnect from 'gulp-connect';
+import gulpLivereload from 'gulp-livereload';
+import gulpNodemon from 'gulp-nodemon';
+import gulpWait from 'gulp-wait';
 import url from 'url';
+
 import { CONSTS } from './CONSTS';
 
 const {
@@ -41,10 +43,12 @@ function runNodeMon(cb) {
 }
 
 function makeServer(cb) {
-    const port = GULP_PORT;
+    const gulpPort = GULP_PORT;
 
     gulpConnect.server({
-        port,
+        port: gulpPort,
+        host: '0.0.0.0',
+        debug: false,
         middleware: () => {
             return [
                 connectLivereload({
@@ -52,11 +56,14 @@ function makeServer(cb) {
                 }),
                 createProxyMiddleware('/', {
                     target: url.parse(APP_SERVER)
-                })
+                }),
+                connectCORS()
             ];
         }
     });
     cb();
+
+    fancyLog(`server http://127.0.0.1:${gulpPort}`);
 }
 
 const server = series(runNodeMon, makeServer);

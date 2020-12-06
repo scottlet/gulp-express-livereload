@@ -1,20 +1,18 @@
 import { dest } from 'gulp';
-import { onError } from 'gulp-notify';
 import browserify from 'browserify';
 import commonShakeify from 'common-shakeify';
 import fancyLog from 'fancy-log';
-import glob from 'glob';
+import { sync } from 'glob';
 import gulpIf from 'gulp-if';
 import gulpLivereload from 'gulp-livereload';
-import gulpPlumber from 'gulp-plumber';
 import gulpReplace from 'gulp-replace';
-import gulpSourcemaps from 'gulp-sourcemaps';
 import gulpUglify from 'gulp-uglify';
 import merge2 from 'merge2';
 import vinylBuffer from 'vinyl-buffer';
 import vinylSourceStream from 'vinyl-source-stream';
 import watchify from 'watchify';
 
+import { notify } from './notify';
 import { CONSTS } from './CONSTS';
 
 const {
@@ -31,7 +29,7 @@ const {
 
 const isDev = NODE_ENV !== 'production';
 
-const entries = glob.sync(JS_CLIENT_SRC + '*.js');
+const entries = sync(JS_CLIENT_SRC + '*.js');
 
 function addToBrowserify(entry) {
     const options = {
@@ -82,13 +80,6 @@ function addToBrowserify(entry) {
     function bundle() {
         return b
             .bundle()
-            .pipe(
-                gulpPlumber({
-                    errorHandler: onError(
-                        error => `JS Bundle Error: ${error.message}`
-                    )
-                })
-            )
             .pipe(vinylSourceStream(name + JS_OUTPUT))
             .pipe(vinylBuffer())
             .pipe(gulpReplace('$$version$$', VERSION))
@@ -98,9 +89,7 @@ function addToBrowserify(entry) {
             .pipe(gulpReplace('$$smalltablet$$', BREAKPOINTS.SMALL_TABLET))
             .pipe(gulpReplace('$$tablet$$', BREAKPOINTS.TABLET))
             .pipe(gulpReplace('$$smalldesktop$$', BREAKPOINTS.SMALL_DESKTOP))
-            .pipe(gulpSourcemaps.init({ loadMaps: true }))
             .pipe(gulpUglify(uglifyOptions))
-            .pipe(gulpIf(isDev, gulpSourcemaps.write()))
             .pipe(dest(JS_DEST))
             .pipe(
                 gulpIf(
@@ -114,7 +103,10 @@ function addToBrowserify(entry) {
 
     b.on('update', bundle);
     b.on('log', fancyLog);
-    b.on('error', fancyLog);
+    b.on('error', err => {
+        notify('Browserify error')(err);
+        this.emit('end');
+    });
 
     return bundle();
 }

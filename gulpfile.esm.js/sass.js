@@ -1,22 +1,23 @@
 import { src, dest } from 'gulp';
-import autoprefixer from 'autoprefixer';
-import cssMqpacker from 'css-mqpacker';
 import cssnano from 'cssnano';
 import Fiber from 'fibers';
 import gulpIf from 'gulp-if';
 import gulpLivereload from 'gulp-livereload';
-import gulpNotify from 'gulp-notify';
 import gulpPlumber from 'gulp-plumber';
 import gulpPostcss from 'gulp-postcss';
 import gulpRename from 'gulp-rename';
 import gulpSass from 'gulp-sass';
 import gulpSassVariables from 'gulp-sass-variables';
 import postcssAssets from 'postcss-assets';
+import postcssCombineMediaQuery from 'postcss-combine-media-query';
+import postcssImport from 'postcss-import';
 import postcssNormalize from 'postcss-normalize';
 import postcssPresetEnv from 'postcss-preset-env';
+import postcssSortMediaQueries from 'postcss-sort-media-queries';
 import sass from 'sass';
 
 import { CONSTS } from './CONSTS';
+import { notify } from './notify';
 
 const {
     NODE_ENV,
@@ -25,7 +26,9 @@ const {
     VERSION,
     SASS_SRC,
     CSS_DEST,
-    LIVERELOAD_PORT
+    LIVERELOAD_PORT,
+    BREAKPOINT_DEVELOPMENT,
+    CSS_NANO_PRESET
 } = CONSTS;
 
 const isDev = NODE_ENV !== 'production';
@@ -65,21 +68,22 @@ function rename(path) {
 
 function compileSass() {
     const processors = [
-        autoprefixer(),
-        cssMqpacker,
-        cssnano,
+        postcssCombineMediaQuery,
+        postcssSortMediaQueries({
+            sort: BREAKPOINT_DEVELOPMENT // default
+        }),
+        cssnano({
+            preset: CSS_NANO_PRESET
+        }),
         postcssAssets,
         postcssNormalize,
+        postcssImport,
         postcssPresetEnv
     ];
 
     return src(SASS_SRC + '/**/*.scss', gulpOptions)
         .pipe(
-            gulpPlumber({
-                errorHandler: gulpNotify.onError(
-                    error => `Styles Error: ${error.message}`
-                )
-            })
+            gulpPlumber({ errorHandler: notify('Styles Error') })
         )
         .pipe(gulpSassVariables(sassVariables))
         .pipe(gulpSass(sassOptions).on('error', gulpSass.logError))

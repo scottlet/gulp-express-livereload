@@ -11,11 +11,11 @@ import { sass } from './sass';
 import { server as buildServer } from './server';
 import { watch } from './watch';
 
-const buildcode = parallel(eslint, mochaTest, copy, sass, browserify);
-const build = series(clean, buildcode);
+const buildcode = parallel(eslint, copy, sass, browserify);
+const build = series(clean, buildcode, mochaTest);
 const server = series(build, watch, buildServer);
 const deployTask = series(build, deploy);
-const defaultTask = series(build, watch, server);
+const defaultTask = series(build, watch, buildServer);
 
 export {
     defaultTask as default,
@@ -25,5 +25,6 @@ export {
     browserify,
     eslint,
     copy,
+    mochaTest as test,
     watch
 };
