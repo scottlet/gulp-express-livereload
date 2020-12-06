@@ -18,6 +18,9 @@ try {
     OPTIONS = require(pth + '/src/options.js');
 } catch (ex) {} //eslint-disable-line
 
+const NAME = OPTIONS.NAME || name;
+const VERSION = OPTIONS.VERSION || version;
+
 let CONSTS = {
     APP_PATH: 'bin',
     APP_SERVER: 'http://127.0.0.1:' + (process.env.PORT || APPSERVER_PORT),
@@ -32,7 +35,7 @@ let CONSTS = {
         SMALL_DESKTOP: 1440
     },
     BREAKPOINT_DEVELOPMENT: 'mobile-first',
-    CSS_DEST: 'app/public/css/',
+    CSS_DEST: 'app/public/' + VERSION + '/css/',
     CSS_NANO_PRESET: 'advanced',
     DEPLOY_DEST: 'deploy',
     FONT_SRC: 'src/fonts',
@@ -44,13 +47,13 @@ let CONSTS = {
     IMG_DEST: 'app/public/images/',
     IMG_SRC: 'src/images',
     JS_CLIENT_SRC: 'src/js/client/',
-    JS_DEST: 'app/public/js/',
+    JS_DEST: 'app/public/' + VERSION + '/js/',
     JS_OUTPUT: '.min.js',
     JS_SERVER_SRC: 'src/js/server/',
     JS_SHARED_SRC: 'src/js/shared/',
     JS_SRC: 'src/js/',
     LIVERELOAD_PORT: process.env.LIVERELOAD_PORT,
-    NAME: OPTIONS.NAME || name,
+    NAME,
     NODE_ENV: process.env.NODE_ENV,
     NODEMON_IGNORE: [
         'gulp-tasks/**/*.js',
@@ -62,13 +65,13 @@ let CONSTS = {
     ],
     NODEMON_WAIT: 3400,
     ROUTES: 'app/routes/',
-    SASS_SRC: 'src/sass',
+    SASS_SRC: 'src/sass/',
     SRC: 'src',
     STATIC_PATH: 'app/public/',
     TEMPLATES_DEST: 'app/views/',
     TEMPLATES_SRC: 'src/templates/',
     TESTS_PATH: 'src/tests/',
-    VERSION: OPTIONS.VERSION || version,
+    VERSION,
     VIDEO_SRC: 'src/video',
     VIEWS: 'app/views/',
     WAIT: 3050

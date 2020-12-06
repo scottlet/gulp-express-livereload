@@ -20,15 +20,15 @@ import { CONSTS } from './CONSTS';
 import { notify } from './notify';
 
 const {
-    NODE_ENV,
-    BREAKPOINTS,
-    NAME,
-    VERSION,
-    SASS_SRC,
-    CSS_DEST,
-    LIVERELOAD_PORT,
     BREAKPOINT_DEVELOPMENT,
-    CSS_NANO_PRESET
+    BREAKPOINTS,
+    CSS_DEST,
+    CSS_NANO_PRESET,
+    LIVERELOAD_PORT,
+    NAME,
+    NODE_ENV,
+    SASS_SRC,
+    VERSION
 } = CONSTS;
 
 const isDev = NODE_ENV !== 'production';
