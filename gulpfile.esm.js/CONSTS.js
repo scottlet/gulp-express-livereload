@@ -39,6 +39,8 @@ let CONSTS = {
     GULP_PORT: process.env.GULP_PORT || SERVER_PORT,
     GULP_TASKS: 'gulp-tasks',
     GULPFILE: 'gulpfile.esm.js',
+    I18N_SRC: 'src/i18n',
+    I18N_DEST: 'app/i18n',
     IMG_DEST: 'app/public/images/',
     IMG_SRC: 'src/images',
     JS_CLIENT_SRC: 'src/js/client/',
