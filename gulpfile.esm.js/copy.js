@@ -12,6 +12,8 @@ const {
     APPSERVER_DEST,
     AUDIO_SRC,
     FONT_SRC,
+    I18N_SRC,
+    I18N_DEST,
     IMG_SRC,
     JS_SERVER_SRC,
     JS_SHARED_SRC,
@@ -41,6 +43,11 @@ function copyBin() {
 function copyViews() {
     return copyFilesFn(TEMPLATES_SOURCE, TEMPLATES_DEST, TEMPLATES_SRC, true);
 }
+
+function copyi18n() {
+    return copyFilesFn(`${I18N_SRC}/**`, I18N_DEST, I18N_SRC, true);
+}
+
 
 function copyOptions() {
     return copyFilesFn(
@@ -85,6 +92,7 @@ function copyFilesFn(source, destination, base = '.', reload) {
 const copy = parallel(
     copyBin,
     copyFiles,
+    copyi18n,
     copyOptions,
     copySharedFiles,
     copyStaticFiles,
