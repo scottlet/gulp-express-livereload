@@ -1,31 +1,36 @@
 import { src } from 'gulp';
-import { onError } from 'gulp-notify';
 import gulpPlumber from 'gulp-plumber';
-import gulpSpawnMocha from 'gulp-spawn-mocha';
+import gulpMocha from 'gulp-mocha';
 import gulpWait from 'gulp-wait';
+
+import { notify } from './notify';
 import { CONSTS } from './CONSTS';
 
 const { TESTS_PATH, WAIT } = CONSTS;
+
+const mochaOptions = {
+    require: 'esm'
+};
 
 function mochaTestLR() {
     return src(TESTS_PATH + '**/*.js', { read: false })
         .pipe(gulpWait(WAIT))
         .pipe(
             gulpPlumber({
-                errorHandler: onError('gulpMocha Error: <%= error.message %>')
+                errorHandler: notify('gulpMocha Error')
             })
         )
-        .pipe(gulpSpawnMocha({ R: 'nyan' }));
+        .pipe(gulpMocha(mochaOptions));
 }
 
 function mochaTest() {
     return src(TESTS_PATH + '**/*.js', { read: false })
         .pipe(
             gulpPlumber({
-                errorHandler: onError('gulpMocha Error: <%= error.message %>')
+                errorHandler: notify('gulpMocha Error')
             })
         )
-        .pipe(gulpSpawnMocha({ R: 'nyan' }));
+        .pipe(gulpMocha(mochaOptions));
 }
 
 export { mochaTest, mochaTestLR };

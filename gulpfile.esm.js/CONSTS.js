@@ -31,7 +31,9 @@ let CONSTS = {
         TABLET: 979,
         SMALL_DESKTOP: 1440
     },
+    BREAKPOINT_DEVELOPMENT: 'mobile-first',
     CSS_DEST: 'app/public/css/',
+    CSS_NANO_PRESET: 'advanced',
     DEPLOY_DEST: 'deploy',
     FONT_SRC: 'src/fonts',
     GULP_PORT: process.env.GULP_PORT || SERVER_PORT,
@@ -70,6 +72,9 @@ let CONSTS = {
     WAIT: 3050
 };
 
-CONSTS = Object.assign(CONSTS, OPTIONS || {});
+CONSTS = {
+    ...CONSTS,
+    ...OPTIONS
+};
 
 export { CONSTS };

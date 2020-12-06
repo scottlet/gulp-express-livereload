@@ -31,7 +31,7 @@ If you don't have homebrew on OSX, visit [http://brew.sh](http://brew.sh)
 
 check out this repo.
 
-NPM pre 7: `npm install` - NPM 7 and above: `npm install --`
+NPM pre 7: `npm install` - NPM 7 and above: `npm install --legacy-peer-deps`
 
 Now you're all configured, running `npm run develop` will give you a livereload enabled express server. You can access it on
 [http://localhost:9000](http://localhost:9000) by default.

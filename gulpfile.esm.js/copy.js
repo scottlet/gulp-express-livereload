@@ -2,7 +2,10 @@ import { parallel, src, dest } from 'gulp';
 import gulpChanged from 'gulp-changed';
 import gulpIf from 'gulp-if';
 import gulpLivereload from 'gulp-livereload';
+import gulpPlumber from 'gulp-plumber';
+
 import { CONSTS } from './CONSTS';
+import { notify } from './notify';
 
 const {
     APP,
@@ -62,6 +65,11 @@ function copyStaticFiles() {
 
 function copyFilesFn(source, destination, base = '.', reload) {
     return src(source, { base })
+        .pipe(
+            gulpPlumber({
+                errorHandler: notify('copy error')
+            })
+        )
         .pipe(gulpChanged(destination))
         .pipe(dest(destination))
         .pipe(
