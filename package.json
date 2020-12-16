@@ -142,7 +142,7 @@
     "gulp-wait": "0.0.2",
     "merge2": "^1.4.1",
     "mocha": "^8.2.1",
-    "node-notifier": "^5.4.3",
+    "node-notifier": "^8.0.1",
     "postcss-assets": "^5.0.0",
     "postcss-import": "^13.0.0",
     "postcss-normalize": "^9.0.0",
