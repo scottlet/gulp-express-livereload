@@ -40,7 +40,7 @@
     "unittest": "NODE_ENV=development gulp test"
   },
   "dependencies": {
-    "@babel/register": "^7.12.1",
+    "@babel/register": "^7.12.13",
     "@types/chai": "^4.2.14",
     "@types/cssnano": "^4.0.0",
     "@types/fibers": "^3.1.0",
