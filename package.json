@@ -73,7 +73,7 @@
     "method-override": "^3.0.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "postcss": "^8.1.14",
+    "postcss": "^8.2.12",
     "postcss-combine-media-query": "^1.0.1",
     "postcss-sort-media-queries": "^2.2.14",
     "sass": "^1.30.0",
