@@ -1,12 +1,11 @@
 import { src, dest } from 'gulp';
 import cssnano from 'cssnano';
-import Fiber from 'fibers';
 import gulpIf from 'gulp-if';
 import gulpLivereload from 'gulp-livereload';
 import gulpPlumber from 'gulp-plumber';
 import gulpPostcss from 'gulp-postcss';
 import gulpRename from 'gulp-rename';
-import gulpSass from 'gulp-sass';
+import gulpSass from 'gulp-dart-sass';
 import gulpSassVariables from 'gulp-sass-variables';
 import postcssAssets from 'postcss-assets';
 import postcssCombineMediaQuery from 'postcss-combine-media-query';
@@ -14,7 +13,6 @@ import postcssImport from 'postcss-import';
 import postcssNormalize from 'postcss-normalize';
 import postcssPresetEnv from 'postcss-preset-env';
 import postcssSortMediaQueries from 'postcss-sort-media-queries';
-import sass from 'sass';
 
 import { CONSTS } from './CONSTS';
 import { notify } from './notify';
@@ -35,7 +33,6 @@ const isDev = NODE_ENV !== 'production';
 
 const sassOptions = {
     errLogToConsole: true,
-    fiber: Fiber,
     includePaths: []
 };
 
@@ -44,8 +41,6 @@ const gulpOptions = isDev
         sourcemaps: true
     }
     : {};
-
-gulpSass.compiler = sass;
 
 function buildSassVariables(breakpoints) {
     let b;
