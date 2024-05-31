@@ -1,6 +1,6 @@
 ## ABOUT
 This is a small project that should make using gulp and LiveReload much easier
-for people. There's example code here: [https://github.com/scottbert/gulp-express-livereload-src-example](https://github.com/scottbert/gulp-express-livereload-src-example). To use the example,
+for people. There's example code here: [https://github.com/scottlet/gulp-express-livereload-src-example](https://github.com/scottlet/gulp-express-livereload-src-example). To use the example,
 check out this repository, then check the example out inside of this repository
 and rename it to `src`. (This exists as a submodule now).
 

@@ -16,13 +16,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/scottbert/gulp-express-livereload.git"
+    "url": "https://github.com/scottlet/gulp-express-livereload.git"
   },
-  "bugs": "https://github.com/scottbert/gulp-express-livereload/issues",
+  "bugs": "https://github.com/scottlet/gulp-express-livereload/issues",
   "description": "This is a small project that should make using gulp and LiveReload much easier for people",
   "license": "(ISC OR GPL-3.0)",
   "contributors": "Scott van Looy",
-  "homepage": "https://github.com/scottbert/gulp-express-livereload",
+  "homepage": "https://github.com/scottlet/gulp-express-livereload",
   "engines": {
     "node": ">=10 <=18"
   },
