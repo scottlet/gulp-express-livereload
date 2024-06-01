@@ -9,11 +9,11 @@ import { CONSTS } from './CONSTS';
 const { GULP_TASKS, GULPFILE, JS_SRC } = CONSTS;
 
 function eslint() {
-    return src([GULPFILE, GULP_TASKS + '/**/*.js', JS_SRC + '/**/*.js'])
-        .pipe(gulpPlumber({ errorHandler: notify('ESLint Error') }))
-        .pipe(gulpChangedInPlace())
-        .pipe(gulpESLint())
-        .pipe(gulpESLint.format());
+  return src([GULPFILE, GULP_TASKS + '/**/*.js', JS_SRC + '/**/*.js'])
+    .pipe(gulpPlumber({ errorHandler: notify('ESLint Error') }))
+    .pipe(gulpChangedInPlace())
+    .pipe(gulpESLint())
+    .pipe(gulpESLint.format());
 }
 
 export { eslint };

@@ -1,7 +1,7 @@
 linters:
-    Indentation:
-        severity: warning
-        width: 4
-    NestingDepth:
-        severity: warning
-        max_depth: 4
+  Indentation:
+    severity: warning
+    width: 4
+  NestingDepth:
+    severity: warning
+    max_depth: 4

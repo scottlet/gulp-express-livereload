@@ -9,28 +9,28 @@ import { CONSTS } from './CONSTS';
 const { TESTS_PATH, WAIT } = CONSTS;
 
 const mochaOptions = {
-    require: 'esm'
+  require: ['esm', 'module-alias/register']
 };
 
 function mochaTestLR() {
-    return src(TESTS_PATH + '**/*.js', { read: false })
-        .pipe(gulpWait(WAIT))
-        .pipe(
-            gulpPlumber({
-                errorHandler: notify('gulpMocha Error')
-            })
-        )
-        .pipe(gulpMocha(mochaOptions));
+  return src(TESTS_PATH + '**/*.js', { read: false })
+    .pipe(gulpWait(WAIT))
+    .pipe(
+      gulpPlumber({
+        errorHandler: notify('gulpMocha Error')
+      })
+    )
+    .pipe(gulpMocha(mochaOptions));
 }
 
 function mochaTest() {
-    return src(TESTS_PATH + '**/*.js', { read: false })
-        .pipe(
-            gulpPlumber({
-                errorHandler: notify('gulpMocha Error')
-            })
-        )
-        .pipe(gulpMocha(mochaOptions));
+  return src(TESTS_PATH + '**/*.js', { read: false })
+    .pipe(
+      gulpPlumber({
+        errorHandler: notify('gulpMocha Error')
+      })
+    )
+    .pipe(gulpMocha(mochaOptions));
 }
 
 export { mochaTest, mochaTestLR };

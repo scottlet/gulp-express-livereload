@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES6",
+    "module": "ES6",
+    "moduleResolution": "Bundler",
+    "checkJs": true,
+    "jsx": "preserve",
+    "paths": {
+      "~/*": ["./src/js/*"]
+    }
+  },
+  "include": [
+    "./src/js/server/**/*",
+    "./src/js/shared/**/*",
+    "./gulpfile.esm.js/**/*"
+  ]
+}

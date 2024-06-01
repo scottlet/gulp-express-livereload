@@ -16,105 +16,120 @@ import { notify } from './notify';
 import { CONSTS } from './CONSTS';
 
 const {
-    NODE_ENV,
-    JS_CLIENT_SRC,
-    NAME,
-    VERSION,
-    JS_OUTPUT,
-    API,
-    BREAKPOINTS,
-    JS_DEST,
-    LIVERELOAD_PORT
+  NODE_ENV,
+  JS_CLIENT_SRC,
+  NAME,
+  VERSION,
+  JS_OUTPUT,
+  API,
+  BREAKPOINTS,
+  JS_DEST,
+  LIVERELOAD_PORT
 } = CONSTS;
 
 const isDev = NODE_ENV !== 'production';
 
 const entries = sync(JS_CLIENT_SRC + '*.js');
 
+const plugins = [
+  [
+    'module-resolver',
+    {
+      root: ['./src/js'],
+      alias: {
+        '~': './src/js/'
+      },
+      extentions: ['.js', '.jsx']
+    }
+  ]
+];
+
 function addToBrowserify(entry) {
-    const options = {
-        entries: [entry],
-        cache: {},
-        packageCache: {},
-        paths: [`./${JS_CLIENT_SRC}modules`]
-    };
+  const options = {
+    entries: [entry],
+    cache: {},
+    packageCache: {},
+    paths: [`./${JS_CLIENT_SRC}modules`]
+  };
 
-    const name = entry
-        .replace('$name', NAME)
-        .replace('$version', VERSION)
-        .replace(/.*\/([\w$\-.]+).js/, '$1');
+  const name = entry
+    .replace('$name', NAME)
+    .replace('$version', VERSION)
+    .replace(/.*\/([\w$\-.]+).js/, '$1');
 
-    const uglifyOptions = {
-        compress: {
-            drop_console: true //eslint-disable-line
-        }
-    };
+  const uglifyOptions = {
+    compress: {
+      drop_console: true //eslint-disable-line
+    }
+  };
 
-    let babelOptions = {};
+  let babelOptions = {};
 
-    if (isDev) {
-        options.plugin = [watchify];
-        delete uglifyOptions.compress.drop_console;
-        babelOptions = { sourceMaps: true };
+  if (isDev) {
+    options.plugin = [watchify];
+    // @ts-ignore
+    delete uglifyOptions.compress.drop_console;
+    babelOptions = { sourceMaps: true };
+  }
+
+  const b = browserify(options).plugin(commonShakeify, {});
+
+  b.transform('babelify', {
+    presets: ['@babel/preset-env'],
+    plugins,
+    ...babelOptions
+  });
+
+  if (isDev) {
+    b.plugin('tinyify', { flat: false });
+  }
+
+  function doLR() {
+    if (process.env.OVERRIDE_LR === 'true') {
+      return false;
     }
 
-    const b = browserify(options).plugin(commonShakeify, {});
+    return isDev;
+  }
 
-    b.transform('babelify', {
-        presets: ['@babel/preset-env'],
-        ...babelOptions
-    });
+  function bundle() {
+    return b
+      .bundle()
+      .pipe(vinylSourceStream(name + JS_OUTPUT))
+      .pipe(vinylBuffer())
+      .pipe(gulpReplace('$$version$$', VERSION))
+      .pipe(gulpReplace('$$API$$', API))
+      .pipe(gulpReplace('$$oldMobile$$', `${BREAKPOINTS.OLD_MOBILE}`))
+      .pipe(gulpReplace('$$mobile$$', `${BREAKPOINTS.MOBILE}`))
+      .pipe(gulpReplace('$$smalltablet$$', `${BREAKPOINTS.SMALL_TABLET}`))
+      .pipe(gulpReplace('$$tablet$$', `${BREAKPOINTS.TABLET}`))
+      .pipe(gulpReplace('$$smalldesktop$$', `${BREAKPOINTS.SMALL_DESKTOP}`))
+      .pipe(gulpUglify(uglifyOptions))
+      .pipe(dest(JS_DEST))
+      .pipe(
+        gulpIf(
+          doLR(),
+          gulpLivereload({
+            port: LIVERELOAD_PORT
+          })
+        )
+      );
+  }
 
-    if (isDev) {
-        b.plugin('tinyify', { flat: false });
-    }
+  b.on('update', bundle);
+  b.on('log', fancyLog);
+  b.on('error', err => {
+    notify('Browserify error')(err);
+    this.emit('end');
+  });
 
-    function doLR() {
-        if (process.env.OVERRIDE_LR === 'true') {
-            return false;
-        }
-
-        return isDev;
-    }
-
-    function bundle() {
-        return b
-            .bundle()
-            .pipe(vinylSourceStream(name + JS_OUTPUT))
-            .pipe(vinylBuffer())
-            .pipe(gulpReplace('$$version$$', VERSION))
-            .pipe(gulpReplace('$$API$$', API))
-            .pipe(gulpReplace('$$oldMobile$$', BREAKPOINTS.OLD_MOBILE))
-            .pipe(gulpReplace('$$mobile$$', BREAKPOINTS.MOBILE))
-            .pipe(gulpReplace('$$smalltablet$$', BREAKPOINTS.SMALL_TABLET))
-            .pipe(gulpReplace('$$tablet$$', BREAKPOINTS.TABLET))
-            .pipe(gulpReplace('$$smalldesktop$$', BREAKPOINTS.SMALL_DESKTOP))
-            .pipe(gulpUglify(uglifyOptions))
-            .pipe(dest(JS_DEST))
-            .pipe(
-                gulpIf(
-                    doLR(),
-                    gulpLivereload({
-                        port: LIVERELOAD_PORT
-                    })
-                )
-            );
-    }
-
-    b.on('update', bundle);
-    b.on('log', fancyLog);
-    b.on('error', err => {
-        notify('Browserify error')(err);
-        this.emit('end');
-    });
-
-    return bundle();
+  return bundle();
 }
 
 function createJSBundles() {
-    const tasks = entries.map(addToBrowserify);
+  const tasks = entries.map(addToBrowserify);
 
-    return merge2(tasks);
+  return merge2(tasks);
 }
 
 //gulp.task('browserify', createJSBundles);

@@ -1,4 +1,5 @@
 ## ABOUT
+
 This is a small project that should make using gulp and LiveReload much easier
 for people. There's example code here: [https://github.com/scottlet/gulp-express-livereload-src-example](https://github.com/scottlet/gulp-express-livereload-src-example). To use the example,
 check out this repository, then check the example out inside of this repository
@@ -10,12 +11,13 @@ This means you can safely update this project at any time and not need to
 change anything else.
 
 ## FEATURES
-* Everything lives in src in a sensible folder structure
-* Browserify is included for JS processing/require.
-* Minification of JS/CSS
-* SCSS out of the box, inc postcss
-* Mocha unit tests
-* Live reload enabled watchers for everything. CSS injected into page
+
+- Everything lives in src in a sensible folder structure
+- Browserify is included for JS processing/require.
+- Minification of JS/CSS
+- SCSS out of the box, inc postcss
+- Mocha unit tests
+- Live reload enabled watchers for everything. CSS injected into page
 
 ## USING
 
@@ -41,10 +43,10 @@ You shouldn't have to now touch anything outside of `src`
 If you wish to use this as a base for future development, remove the git info
 from inside of src and either
 
-* Remove the git info from this repo too and create an empty repo and check all of this in
+- Remove the git info from this repo too and create an empty repo and check all of this in
 
-* OR keep the git info in here, meaning you can periodically update your copy
-of this repo whenever you wish, but keep the src folder separately under source control.
+- OR keep the git info in here, meaning you can periodically update your copy
+  of this repo whenever you wish, but keep the src folder separately under source control.
 
 ## Deploying
 
@@ -52,9 +54,9 @@ You can run `npm run deploy` to copy everything to `deploy/app` - this folder ca
 
 Changelog:
 
-* 4.3.0 - Changed to use `npm` scripts. (Still uses gulp under the hood). Documented deploy.
-* 3.0.0 - Added in babel support as it's fast now. Deploy works correctly. Tweaked some stuff around how CSS is built. Made the javascript minification better. Tweaked the eslint settings.
-* 1.1.0 - A few changes reorganising things. Updated everything to work correctly.
-Changed a lot of the dependencies and tweaked the watchers and notification systems. Added the ability to override options.
+- 4.3.0 - Changed to use `npm` scripts. (Still uses gulp under the hood). Documented deploy.
+- 3.0.0 - Added in babel support as it's fast now. Deploy works correctly. Tweaked some stuff around how CSS is built. Made the javascript minification better. Tweaked the eslint settings.
+- 1.1.0 - A few changes reorganising things. Updated everything to work correctly.
+  Changed a lot of the dependencies and tweaked the watchers and notification systems. Added the ability to override options.
 
-* 1.0.0 - Initial commit. Working well enough to use.
+- 1.0.0 - Initial commit. Working well enough to use.

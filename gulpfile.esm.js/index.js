@@ -18,13 +18,13 @@ const deployTask = series(build, deploy);
 const defaultTask = series(build, watch, buildServer);
 
 export {
-    defaultTask as default,
-    server,
-    deployTask as deploy,
-    build,
-    browserify,
-    eslint,
-    copy,
-    mochaTest as test,
-    watch
+  defaultTask as default,
+  server,
+  deployTask as deploy,
+  build,
+  browserify,
+  eslint,
+  copy,
+  mochaTest as test,
+  watch
 };
