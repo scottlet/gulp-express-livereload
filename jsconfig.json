@@ -8,7 +8,8 @@
     "jsx": "preserve",
     "paths": {
       "~/*": ["./src/js/*"]
-    }
+    },
+    "types": ["node"]
   },
   "include": [
     "./src/js/server/**/*",

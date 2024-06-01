@@ -63,7 +63,7 @@ let CONSTS = {
     'tests/**/*.js',
     'gulpfile.js'
   ],
-  NODEMON_WAIT: 3400,
+  NODEMON_WAIT: 500,
   ROUTES: 'app/routes/',
   SASS_SRC: 'src/sass/',
   SRC: 'src',

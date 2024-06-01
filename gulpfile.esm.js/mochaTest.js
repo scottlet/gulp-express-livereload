@@ -12,6 +12,10 @@ const mochaOptions = {
   require: ['esm', 'module-alias/register']
 };
 
+/**
+ * Runs the Mocha test suite with live reloading.
+ * @returns {NodeJS.ReadWriteStream} The stream of the Mocha test suite.
+ */
 function mochaTestLR() {
   return src(TESTS_PATH + '**/*.js', { read: false })
     .pipe(gulpWait(WAIT))
@@ -23,6 +27,10 @@ function mochaTestLR() {
     .pipe(gulpMocha(mochaOptions));
 }
 
+/**
+ * Runs the Mocha test suite and handles any errors that occur.
+ * @returns {NodeJS.ReadWriteStream} The stream of the Mocha test suite.
+ */
 function mochaTest() {
   return src(TESTS_PATH + '**/*.js', { read: false })
     .pipe(

@@ -8,6 +8,10 @@ import { CONSTS } from './CONSTS';
 
 const { GULP_TASKS, GULPFILE, JS_SRC } = CONSTS;
 
+/**
+ * Runs ESLint on the specified JavaScript files.
+ * @returns {NodeJS.ReadWriteStream} The stream of the ESLint process.
+ */
 function eslint() {
   return src([GULPFILE, GULP_TASKS + '/**/*.js', JS_SRC + '/**/*.js'])
     .pipe(gulpPlumber({ errorHandler: notify('ESLint Error') }))

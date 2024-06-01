@@ -20,6 +20,11 @@ const {
   NODEMON_WAIT
 } = CONSTS;
 
+/**
+ * Runs the Nodemon task to monitor and restart the Node.js server.
+ * @param {Function} cb - The callback function to be called when the task is complete.
+ * @returns {object} The gulpNodemon instance.
+ */
 function runNodeMon(cb) {
   return gulpNodemon({
     script: `${APPSERVER_DEST + APP}`,
@@ -41,6 +46,12 @@ function runNodeMon(cb) {
   });
 }
 
+/**
+ * Creates a server using gulp-connect and sets up middleware for live reloading,
+ * proxying requests to the app server, and enabling CORS.
+ * @param {Function} cb - The callback function to be called after the server is set up.
+ * @returns {void} This function does not return anything.
+ */
 function makeServer(cb) {
   const gulpPort = parseInt(GULP_PORT);
 

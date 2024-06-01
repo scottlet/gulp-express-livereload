@@ -44,6 +44,10 @@ const plugins = [
   ]
 ];
 
+/**
+ * @param {string} entry entry
+ * @returns {NodeJS.ReadWriteStream} stream
+ */
 function addToBrowserify(entry) {
   const options = {
     entries: [entry],
@@ -84,6 +88,10 @@ function addToBrowserify(entry) {
     b.plugin('tinyify', { flat: false });
   }
 
+  /**
+   * Checks if Live Reload should be enabled based on the environment and user settings.
+   * @returns {boolean} Returns `true` if Live Reload should be enabled, `false` otherwise.
+   */
   function doLR() {
     if (process.env.OVERRIDE_LR === 'true') {
       return false;
@@ -92,6 +100,10 @@ function addToBrowserify(entry) {
     return isDev;
   }
 
+  /**
+   * Bundles the browserify bundle and performs various transformations on it.
+   * @returns {NodeJS.ReadWriteStream} The transformed bundle stream.
+   */
   function bundle() {
     return b
       .bundle()
@@ -126,6 +138,11 @@ function addToBrowserify(entry) {
   return bundle();
 }
 
+/**
+ * Creates JavaScript bundles by mapping over the entries array and applying the addToBrowserify function.
+ * The resulting tasks are then merged using merge2.
+ * @returns {NodeJS.ReadWriteStream} The merged stream
+ */
 function createJSBundles() {
   const tasks = entries.map(addToBrowserify);
 

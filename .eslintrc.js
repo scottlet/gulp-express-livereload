@@ -7,14 +7,19 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        paths: ['.', 'src'],
         extensions: ['.js', '.jsx']
+      },
+      alias: {
+        map: [['~', './src/js/']]
       }
     }
   },
   extends: [
     'eslint:recommended',
-    'prettier:recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/recommended',
+    'plugin:prettier/recommended',
     'plugin:jsdoc/recommended'
   ],
   parserOptions: {
@@ -42,7 +47,6 @@ module.exports = {
     'eol-last': 2,
     'func-call-spacing': [2, 'never'],
     'func-style': [2, 'declaration'],
-    indent: [2, 2, { SwitchCase: 0 }],
     'lines-around-directive': 2,
     'max-len': [1, 120],
     'new-cap': 0,
@@ -109,6 +113,12 @@ module.exports = {
     strict: [2, 'global'],
     'valid-jsdoc': 2,
     'vars-on-top': 1,
-    'import/no-unresolved': [2]
+    'import/no-unresolved': [2],
+    'jsdoc/no-undefined-types': [
+      1,
+      {
+        definedTypes: ['NodeJS']
+      }
+    ]
   }
 };

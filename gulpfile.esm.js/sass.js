@@ -40,6 +40,11 @@ const gulpOptions = {
   sourcemaps: isDev
 };
 
+/**
+ * Generates a Sass variables object based on the provided breakpoints.
+ * @param {object} breakpoints - An object containing breakpoints as key-value pairs.
+ * @returns {object} - An object containing Sass variables with breakpoints as keys and pixel values as values.
+ */
 function buildSassVariables(breakpoints) {
   let b;
   const c = {};
@@ -53,11 +58,21 @@ function buildSassVariables(breakpoints) {
 
 const sassVariables = buildSassVariables(BREAKPOINTS);
 
+/**
+ * Renames the basename of a given path by replacing placeholders with the values of `NAME` and `VERSION`,
+ * and appends `.min` to the end of the basename.
+ * @param {object} path - The path object to be renamed.
+ * @returns {void} This function does not return a value.
+ */
 function rename(path) {
   path.basename =
     path.basename.replace('$name', NAME).replace('$version', VERSION) + '.min';
 }
 
+/**
+ * Compiles SCSS files into CSS using Gulp and various PostCSS plugins.
+ * @returns {NodeJS.ReadWriteStream} The Gulp stream containing the compiled CSS files.
+ */
 function compileSass() {
   const processors = [
     postcssCombineMediaQuery,

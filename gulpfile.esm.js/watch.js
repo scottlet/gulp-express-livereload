@@ -21,6 +21,11 @@ const {
   VIDEO_SRC
 } = CONSTS;
 
+/**
+ * Watches for changes in various directories and triggers corresponding tasks.
+ * @param {Function} cb - The callback function to be called
+ * @returns {void}
+ */
 function watchers(cb) {
   listen({
     port: LIVERELOAD_PORT

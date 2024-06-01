@@ -15,7 +15,22 @@ function short(a) {
   return a;
 }
 
+/**
+ * @typedef {import('node-notifier').NotificationCallback} ErrorHandlerFunction
+ * @typedef {import('http-errors').HttpError} HttpError
+ */
+
+/**
+ * Creates a notification sender function based on the given type.
+ * @param {string} type - The type of the notification.
+ * @returns {function(HttpError): boolean} A function that sends a notification with the given type and error details
+ */
 function sendNotificationFactory(type) {
+  /**
+   * @param {HttpError} error error object
+   * @returns {boolean}
+   */
+
   return function sendNotification(error) {
     if (error.stack) {
       console.error(error.stack);
@@ -30,6 +45,8 @@ function sendNotificationFactory(type) {
       sound: true,
       timeout: 15
     });
+
+    return true;
   };
 }
 
