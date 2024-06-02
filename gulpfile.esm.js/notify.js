@@ -2,14 +2,15 @@ import notifier from 'node-notifier';
 import { join } from 'path';
 
 /**
- * @param {string} a array or string
- * @returns {string};
+ * Returns the last element of an array if the input is an array, otherwise returns the input itself.
+ * @param {string} a - The input to be processed.
+ * @returns {string} - The last element of the input array if it is an array, otherwise the input itself.
  */
 function short(a) {
-  if (Array.isArray(a)) {
+  if (a.includes('/')) {
     const arr = a.split('/');
 
-    return arr[arr.length - 1];
+    return arr.pop();
   }
 
   return a;

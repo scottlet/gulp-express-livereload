@@ -1,6 +1,6 @@
 {
   "name": "gulp-express-handlebars-livereload",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "keywords": [
     "gulp",
     "express",
@@ -42,7 +42,10 @@
     "deploy": "NODE_ENV=production gulp deploy",
     "start": "NODE_ENV=production node ./bin/www",
     "test": "NODE_ENV=development snyk test && gulp eslint",
-    "unittest": "NODE_ENV=development gulp test"
+    "unittest": "NODE_ENV=development gulp test",
+    "lint": "eslint './src/**/*.{js,jsx}'",
+    "lint:type-check": "tsc --project jsconfig.json --noEmit  --maxNodeModuleJsDepth 0",
+    "validate": "npm run lint && npm run lint:type-check"
   },
   "_moduleAliases": {
     "@root": "./app",
@@ -166,6 +169,7 @@
     "require-dir": "^1.2.0",
     "sinon": "^18.0.0",
     "tinyify": "^4.0.0",
+    "typescript": "^5.4.5",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^4.0.0"
