@@ -54,7 +54,7 @@ function watchers(cb) {
   );
   const watchTemplates = watch([`${TEMPLATES_SRC}**/*`], parallel(copyViews));
   const watchTests = watch(
-    [`${TESTS_PATH}/**/*.js`, `${JS_SERVER_SRC}/**/*`],
+    [`${TESTS_PATH}**/*.js`, `${JS_SERVER_SRC}**/*`],
     parallel(mochaTest)
   );
 

@@ -17,7 +17,7 @@ const mochaOptions = {
  * @returns {NodeJS.ReadWriteStream} The stream of the Mocha test suite.
  */
 function mochaTestLR() {
-  return src(TESTS_PATH + '**/*.js', { read: false })
+  return src(`./${TESTS_PATH}**/*.js`, { read: false })
     .pipe(gulpWait(WAIT))
     .pipe(
       gulpPlumber({
@@ -32,7 +32,7 @@ function mochaTestLR() {
  * @returns {NodeJS.ReadWriteStream} The stream of the Mocha test suite.
  */
 function mochaTest() {
-  return src(TESTS_PATH + '**/*.js', { read: false })
+  return src(`./${TESTS_PATH}**/*.js`, { read: false })
     .pipe(
       gulpPlumber({
         errorHandler: notify('gulpMocha Error')

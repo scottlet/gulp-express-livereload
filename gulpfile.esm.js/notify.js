@@ -3,11 +3,11 @@ import { join } from 'path';
 
 /**
  * Returns the last element of an array if the input is an array, otherwise returns the input itself.
- * @param {string} a - The input to be processed.
+ * @param {string} [a] - The input to be processed.
  * @returns {string} - The last element of the input array if it is an array, otherwise the input itself.
  */
 function short(a) {
-  if (a.includes('/')) {
+  if (a && a.includes('/')) {
     const arr = a.split('/');
 
     return arr.pop();
