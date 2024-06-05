@@ -17,7 +17,6 @@ const {
   JS_SERVER_SRC,
   JS_SHARED_SRC,
   TEMPLATES_SRC,
-  TESTS_PATH,
   VIDEO_SRC
 } = CONSTS;
 
@@ -46,29 +45,26 @@ function watchers(cb) {
     parallel(copyStaticFiles, sass)
   );
 
-  const watchSass = watch([`${SASS_SRC}**/*`], parallel(sass));
-  const watchServerJS = watch([`${JS_SERVER_SRC}**/*`], parallel(copyFiles));
+  const watchSass = watch([`${SASS_SRC}**/*`], sass);
+  const watchServerJS = watch([`${JS_SERVER_SRC}**/*`], copyFiles);
   const watchSharedJS = watch(
     [`${JS_SHARED_SRC}**/*`],
     parallel(copySharedFiles)
   );
-  const watchTemplates = watch([`${TEMPLATES_SRC}**/*`], parallel(copyViews));
-  const watchTests = watch(
-    [`${TESTS_PATH}**/*.js`, `${JS_SERVER_SRC}**/*`],
-    parallel(mochaTest)
-  );
+  const watchTemplates = watch([`${TEMPLATES_SRC}**/*`], copyViews);
+  const watchTests = watch('**/*.js', mochaTest);
 
   [
-    watchCopiedTemplates,
-    watchPublic,
-    watchSass,
-    watchServerJS,
-    watchSharedJS,
-    watchTemplates,
-    watchTests
+    { label: 'watchPublic', watcher: watchPublic },
+    { label: 'watchSass', watcher: watchSass },
+    { label: 'watchServerJS', watcher: watchServerJS },
+    { label: 'watchSharedJS', watcher: watchSharedJS },
+    { label: 'watchTemplates', watcher: watchTemplates },
+    { label: 'watchTests', watcher: watchTests },
+    { label: 'watchCopiedTemplates', watcher: watchCopiedTemplates }
   ].forEach(w => {
-    w.on('change', path => {
-      fancyLog(`file ${path} was changed`);
+    w.watcher.on('change', path => {
+      fancyLog(`file ${path} was changed. Triggered by ${w.label} watcher.`);
     });
   });
   cb();

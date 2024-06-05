@@ -43,7 +43,7 @@ const TEMPLATES_SOURCE = [`${TEMPLATES_SRC}**`];
  */
 function copyBin() {
   return copyFilesFn(
-    [SRC + '/' + APP, SRC + '/' + 'bin/app.js'],
+    [`${SRC}/${APP}`, `${SRC}/bin/app.js`],
     APPSERVER_DEST,
     SRC
   );
@@ -75,7 +75,7 @@ function copyi18n() {
  */
 function copyOptions() {
   return copyFilesFn(
-    ['src/options.js', 'src/package.json'],
+    [`${SRC}/options.js`, `${SRC}/package.json`],
     APPSERVER_DEST,
     SRC,
     true
@@ -103,7 +103,7 @@ function copySharedFiles() {
  * @returns {NodeJS.ReadWriteStream} A promise that resolves when the files have been successfully copied.
  */
 function copyStaticFiles() {
-  return copyFilesFn(STATIC_SRC, STATIC_PATH + '/' + VERSION, SRC, true);
+  return copyFilesFn(STATIC_SRC, `${STATIC_PATH}/${VERSION}`, SRC, true);
 }
 
 /**

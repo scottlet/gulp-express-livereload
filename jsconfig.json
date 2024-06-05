@@ -5,15 +5,17 @@
     "module": "ES6",
     "moduleResolution": "Bundler",
     "checkJs": true,
+    "skipLibCheck": true,
     "jsx": "preserve",
     "paths": {
       "~/*": ["./src/js/*"]
     },
-    "types": ["node"]
+    "types": ["node", "mocha", "undertaker"]
   },
   "include": [
     "./src/js/server/**/*",
     "./src/js/shared/**/*",
     "./gulpfile.esm.js/**/*"
-  ]
+  ],
+  "exclude": ["node_modules", "**/node_modules/*"]
 }

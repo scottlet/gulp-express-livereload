@@ -3,11 +3,19 @@ module.exports = {
     node: true,
     es6: true
   },
+  overrides: [
+    {
+      files: ['**/*.test.*'],
+      env: {
+        mocha: true
+      }
+    }
+  ],
   plugins: ['jsdoc', 'import', 'prettier'],
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js']
       },
       alias: {
         map: [['~', './src/js/']]

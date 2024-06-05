@@ -1,2 +1,11 @@
-app/**
-deploy/**
+dist/
+docs/
+node_modules/
+.vscode/
+.git/
+deploy/
+.cache
+.tmp
+src/
+app/
+.app/

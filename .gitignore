@@ -31,5 +31,6 @@ npm-debug.log
 .DS_Store
 
 app/
+.app/
 deploy/
 #src/
