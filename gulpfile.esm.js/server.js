@@ -56,6 +56,7 @@ function makeServer(cb) {
   const gulpPort = parseInt(GULP_PORT);
 
   gulpConnect.server({
+    silent: true,
     port: gulpPort,
     host: '0.0.0.0',
     debug: false,
@@ -73,7 +74,13 @@ function makeServer(cb) {
   });
   cb();
 
-  fancyLog(`server http://127.0.0.1:${gulpPort}`);
+  console.log('\n');
+  fancyLog(
+    '\x1b[32m%s\x1b[0m',
+    '>> Development Server http://localhost:' + GULP_PORT,
+    '\x1b[0m'
+  );
+  console.log('\n');
 }
 
 const server = series(runNodeMon, makeServer);

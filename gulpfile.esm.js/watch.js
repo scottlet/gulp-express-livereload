@@ -5,7 +5,7 @@ import fancyLog from 'fancy-log';
 import { CONSTS } from './CONSTS';
 import { sass } from './sass';
 import { copyStaticFiles, copyFiles, copySharedFiles, copyViews } from './copy';
-import { mochaTest } from './mochaTest';
+import { mochaTest, mochaTestSrc } from './mochaTest';
 
 const {
   AUDIO_SRC,
@@ -70,4 +70,21 @@ function watchers(cb) {
   cb();
 }
 
-export { watchers as watch };
+/**
+ * Watches for changes in test files and triggers the mocha test task.
+ * @param {Function} cb - The callback function to be called
+ * @returns {void}
+ */
+function testWatcher(cb) {
+  const watchTestsSrc = watch('**/*.js', mochaTestSrc);
+
+  [{ label: 'Watch src tests', watcher: watchTestsSrc }].forEach(w => {
+    w.watcher.on('change', path => {
+      fancyLog(`file ${path} was changed. Triggered by ${w.label} watcher.`);
+    });
+  });
+  mochaTestSrc();
+  cb();
+}
+
+export { watchers as watch, testWatcher };

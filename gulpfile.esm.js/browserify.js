@@ -29,7 +29,7 @@ const {
 
 const isDev = NODE_ENV !== 'production';
 
-const entries = sync(JS_CLIENT_SRC + '*.js');
+const entries = sync(`${JS_CLIENT_SRC}*.js`);
 
 const plugins = [
   [

@@ -6,16 +6,17 @@ import { copy } from './copy';
 import { deploy } from './deploy';
 
 import { eslint } from './eslint';
-import { mochaTest } from './mochaTest';
+import { mochaTest, mochaTestSrc } from './mochaTest';
 import { sass } from './sass';
 import { server as buildServer } from './server';
-import { watch } from './watch';
+import { watch, testWatcher } from './watch';
 
 const buildcode = parallel(eslint, copy, sass, browserify);
 const build = series(clean, buildcode, mochaTest);
 const server = series(build, watch, buildServer);
 const deployTask = series(build, deploy);
 const defaultTask = series(build, watch, buildServer);
+const watchTask = series(build, watch);
 
 export {
   defaultTask as default,
@@ -25,6 +26,8 @@ export {
   browserify,
   eslint,
   copy,
-  mochaTest as test,
-  watch
+  mochaTest,
+  mochaTestSrc,
+  watchTask as watch,
+  testWatcher
 };
