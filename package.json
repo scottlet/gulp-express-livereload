@@ -30,7 +30,7 @@
   },
   "author": {
     "name": "Scott van Looy",
-    "email": "scott@03sq.net"
+    "email": "scott@quul.net"
   },
   "private": false,
   "overrides": {
@@ -149,7 +149,7 @@
     "gulp-eslint": "^6.0.0",
     "gulp-if": "^3.0.0",
     "gulp-livereload": "^4.0.2",
-    "gulp-spawn-mocha": "^6.0.0",
+    "gulp-mocha": "^8.0.0",
     "gulp-nodemon": "^2.5.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^10.0.0",
@@ -161,6 +161,7 @@
     "gulp-uglify": "^3.0.2",
     "gulp-wait": "0.0.2",
     "merge2": "^1.4.1",
+    "mocha": "^10.4.0",
     "node-notifier": "^10.0.1",
     "postcss-assets": "^6.0.0",
     "postcss-import": "^16.1.0",
