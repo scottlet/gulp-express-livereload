@@ -16,8 +16,9 @@ change anything else.
 - Browserify is included for JS processing/require.
 - Minification of JS/CSS
 - SCSS out of the box, inc postcss
-- Mocha unit tests
-- Live reload enabled watchers for everything. CSS injected into page
+- Mocha unit test runner
+- Live reload enabled watchers for everything. CSS injected into page.
+- aliases - secret sauce for Express in `bin/www` - view/add new ones in `jsconfig.json` `package.json` and `.eslintrc.js`
 
 ## USING
 
